@@ -2,75 +2,77 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pad = n => String(n).padStart(2, '0');
   const video = $('#teaser');
   const soundBtn = $('#sound');
 
-  /* ленты: повторяем текст, чтобы бесконечно ехал */
-  $$('[data-tape]').forEach((el, i) => {
-    const chunk = (el.dataset.tape + ' ● ').repeat(6);
-    const track = document.createElement('div');
-    track.className = 'tape__track';
-    track.innerHTML = `<span>${chunk}</span><span aria-hidden="true">${chunk}</span>`;
-    el.textContent = '';
-    el.appendChild(track);
-    if (i % 2) el.classList.add('tape--rev');
-  });
+  /* навигация: на десктопе всегда раскрыта */
+  const side = $('#side');
+  const mq = matchMedia('(min-width: 760px)');
+  const syncSide = () => { if (mq.matches) side.open = true; };
+  syncSide(); mq.addEventListener('change', syncSide);
+  side.addEventListener('click', e => { if (e.target.closest('a') && !mq.matches) side.open = false; });
 
-  /* вход */
-  const gate = $('#gate');
+  /* звук */
   const setSound = on => {
     video.muted = !on;
     soundBtn.setAttribute('aria-pressed', on);
-    soundBtn.querySelector('b').textContent = on ? 'ВКЛ' : 'ВЫКЛ';
+    soundBtn.querySelector('b').textContent = on ? 'вкл' : 'выкл';
     if (on) video.play().catch(() => {});
   };
-  const enter = withSound => {
-    if (navigator.vibrate) navigator.vibrate([30, 60, 30]);
-    gate.classList.add('lit');
-    if (withSound) setSound(true);
-    setTimeout(() => {
-      gate.classList.add('off');
-      document.body.classList.remove('locked');
-      try { sessionStorage.setItem('v01-in', '1'); } catch (e) {}
-    }, reduce ? 0 : 1000);
-  };
-  let seen = false;
-  try { seen = sessionStorage.getItem('v01-in') === '1'; } catch (e) {}
-  if (seen) gate.classList.add('off');
-  else document.body.classList.add('locked');
-  $('#enter').addEventListener('click', () => enter(false));
-  $('#enterSound').addEventListener('click', () => enter(true));
-  gate.addEventListener('pointermove', e => {
-    gate.style.setProperty('--x', e.clientX + 'px');
-    gate.style.setProperty('--y', e.clientY + 'px');
-  });
-
-  /* звук тизера */
   soundBtn.addEventListener('click', () => setSound(video.muted));
   video.play().catch(() => {});
 
-  /* часы REC */
-  const clock = $('#clock');
-  const pad = n => String(n).padStart(2, '0');
-  const tick = () => {
-    const d = new Date();
-    clock.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-  };
-  tick(); setInterval(tick, 1000);
+  /* таймкод кассеты */
+  const tc = $('#tc');
+  video.addEventListener('timeupdate', () => {
+    const t = Math.floor(video.currentTime);
+    tc.textContent = `00:${pad(Math.floor(t / 60))}:${pad(t % 60)}`;
+  });
 
-  /* обратный отсчёт: 07.11 18:00 МСК (UTC+3) */
-  const start = Date.UTC(2026, 10, 7, 15, 0, 0);
-  const end = Date.UTC(2026, 10, 8, 1, 0, 0);
-  const cd = $('#cd'), cdLabel = $('#cdLabel');
+  /* вход: «загрузка» как у флеш-интро */
+  const gate = $('#gate');
+  let seen = false;
+  try { seen = sessionStorage.getItem('v01-in') === '1'; } catch (e) {}
+  if (seen) {
+    gate.classList.add('off');
+  } else {
+    document.body.classList.add('locked');
+    const pct = $('#pct');
+    let p = 0;
+    const step = () => {
+      p = Math.min(100, p + Math.ceil(Math.random() * 9));
+      pct.textContent = p;
+      if (p < 100) setTimeout(step, p > 80 && p < 90 ? 260 : 45);
+      else gate.classList.add('ready');
+    };
+    reduce ? (pct.textContent = 100, gate.classList.add('ready')) : step();
+  }
+  const enter = (e, withSound) => {
+    e.preventDefault();
+    if (withSound) setSound(true);
+    gate.classList.add('off');
+    document.body.classList.remove('locked');
+    try { sessionStorage.setItem('v01-in', '1'); } catch (err) {}
+  };
+  $('#enter').addEventListener('click', e => enter(e, false));
+  $('#enterSound').addEventListener('click', e => enter(e, true));
+
+  /* обратный отсчёт: 07.11 18:00 МСК */
+  const start = Date.UTC(2026, 10, 7, 15), end = Date.UTC(2026, 10, 8, 1);
+  const cd = $('#cd');
   const count = () => {
     const now = Date.now();
-    if (now >= end) { cdLabel.textContent = 'ОБЪЕКТ ЗАКРЫТ'; cd.textContent = 'ДО VOLUME02'; return; }
-    if (now >= start) { cdLabel.textContent = 'ОБЪЕКТ ОТКРЫТ'; cd.textContent = 'СМЕНА ИДЁТ'; return; }
+    if (now >= end) { cd.textContent = 'объект закрыт'; return; }
+    if (now >= start) { cd.textContent = 'объект открыт'; return; }
     let s = Math.floor((start - now) / 1000);
-    const dd = Math.floor(s / 86400); s %= 86400;
-    cd.textContent = `${dd}д ${pad(Math.floor(s / 3600))}:${pad(Math.floor(s % 3600 / 60))}:${pad(s % 60)}`;
+    const d = Math.floor(s / 86400); s %= 86400;
+    cd.textContent = `${d}д ${pad(Math.floor(s / 3600))}:${pad(Math.floor(s % 3600 / 60))}:${pad(s % 60)}`;
   };
   count(); setInterval(count, 1000);
+
+  /* счётчик посетителей */
+  $('#counter').textContent = String(711 + Math.floor((Date.now() - Date.UTC(2026, 9, 27)) / 97000)).padStart(6, '0');
 
   /* закрашенное — тап открывает */
   $$('.rd').forEach(el => {
@@ -83,38 +85,55 @@
     el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
   });
 
-  /* появление при скролле */
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      e.target.classList.add(e.target.classList.contains('h') ? 'flick' : e.target.classList.contains('refl') ? 'on' : 'in');
-      io.unobserve(e.target);
-    });
-  }, { rootMargin: '0px 0px -12% 0px' });
-  $$('[data-reveal], .h, .refl').forEach(el => io.observe(el));
+  /* фото «проявляются» при скролле */
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px' });
+  $$('.ph, .strip figure').forEach(el => io.observe(el));
 
-  /* видео играет только пока видно; липкая кнопка — после hero */
+  /* подпись не должна попадать под затемнение */
+  const syncCaps = () => $$('.ph').forEach(f => {
+    const c = f.querySelector('figcaption');
+    if (c) f.style.setProperty('--cap', c.offsetHeight + 'px');
+  });
+  syncCaps(); addEventListener('resize', syncCaps);
+
+  /* лайтбокс */
+  const lb = $('#lb'), lbImg = $('#lbImg'), lbCap = $('#lbCap');
+  const openLb = (src, cap) => { lbImg.src = src; lbCap.textContent = cap || ''; lb.hidden = false; };
+  const closeLb = () => { lb.hidden = true; lbImg.removeAttribute('src'); };
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-img]');
+    if (t) { e.preventDefault(); openLb(`assets/img/${t.dataset.img}.webp`, t.textContent.trim()); return; }
+    const img = e.target.closest('.ph img, .strip img, .doc__att img');
+    if (img && !img.closest('.ph--poster a')) {
+      const fig = img.closest('figure');
+      const cap = fig && (fig.querySelector('figcaption') || fig.querySelector('.ts'));
+      openLb(img.currentSrc || img.src, cap ? cap.textContent : img.alt);
+    }
+  });
+  lb.addEventListener('click', closeLb);
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) closeLb(); });
+
+  /* видео играет, только пока видно; липкие билеты — после шапки и не на допуске */
   const sticky = $('#sticky');
-  const access = $('#access');
-  let heroVisible = true, accessVisible = false;
-  const syncSticky = () => sticky.classList.toggle('show', !heroVisible && !accessVisible);
+  let vcrVisible = true, admVisible = false;
+  const syncSticky = () => sticky.classList.toggle('show', !vcrVisible && !admVisible);
   new IntersectionObserver(([e]) => {
-    heroVisible = e.isIntersecting;
-    if (heroVisible) video.play().catch(() => {}); else video.pause();
+    vcrVisible = e.isIntersecting;
+    if (vcrVisible) video.play().catch(() => {}); else video.pause();
     syncSticky();
-  }, { threshold: 0.15 }).observe($('#top'));
-  new IntersectionObserver(([e]) => { accessVisible = e.isIntersecting; syncSticky(); }, { threshold: 0.2 }).observe($('.pass'));
+  }, { threshold: 0.1 }).observe($('.vcr'));
+  new IntersectionObserver(([e]) => { admVisible = e.isIntersecting; syncSticky(); }, { threshold: 0.1 }).observe($('#access'));
 
-  /* фонарь: один луч на все улики */
-  const evs = $$('.ev__ph');
+  /* фонарь: один луч на все тёмные фото */
   const visible = new Set();
-  let px = innerWidth / 2, py = innerHeight / 2, lastMove = -1e9, raf = 0;
-  let lx = px, ly = py;
-  const evIO = new IntersectionObserver(entries => {
+  let px = innerWidth / 2, py = innerHeight / 2, lx = px, ly = py, lastMove = -1e9, raf = 0;
+  const lightIO = new IntersectionObserver(entries => {
     entries.forEach(e => e.isIntersecting ? visible.add(e.target) : visible.delete(e.target));
     if (visible.size && !raf) raf = requestAnimationFrame(loop);
   });
-  evs.forEach(el => evIO.observe(el));
+  $$('.ph[data-light]').forEach(el => lightIO.observe(el));
 
   const move = (x, y) => { px = x; py = y; lastMove = performance.now(); };
   addEventListener('pointermove', e => move(e.clientX, e.clientY), { passive: true });
@@ -126,7 +145,7 @@
     if (!visible.size) return;
     let tx = px, ty = py;
     if (t - lastMove > 1800) {
-      // никто не светит — фонарь сам гуляет по центру экрана, как у идущего человека
+      // никто не светит — фонарь сам гуляет, как у идущего человека
       const w = innerWidth, h = innerHeight;
       tx = w / 2 + Math.sin(t / 1100) * w * 0.22 + Math.sin(t / 370) * 6;
       ty = h * 0.48 + Math.cos(t / 1500) * h * 0.1 + Math.cos(t / 290) * 5;
@@ -134,11 +153,12 @@
     const k = reduce ? 1 : 0.14;
     lx += (tx - lx) * k; ly += (ty - ly) * k;
     const flick = !reduce && Math.random() < 0.012;
+    const r = flick ? 40 : Math.max(120, Math.min(210, innerWidth * 0.38));
     visible.forEach(el => {
-      const r = el.getBoundingClientRect();
-      el.style.setProperty('--x', (lx - r.left) + 'px');
-      el.style.setProperty('--y', (ly - r.top) + 'px');
-      el.style.setProperty('--r', (flick ? 40 : Math.max(120, Math.min(200, innerWidth * 0.36))) + 'px');
+      const b = el.getBoundingClientRect();
+      el.style.setProperty('--x', (lx - b.left) + 'px');
+      el.style.setProperty('--y', (ly - b.top) + 'px');
+      el.style.setProperty('--r', r + 'px');
     });
     raf = requestAnimationFrame(loop);
   }
