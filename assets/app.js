@@ -48,15 +48,13 @@
     };
     reduce ? (pct.textContent = 100, gate.classList.add('ready')) : step();
   }
-  const enter = (e, withSound) => {
+  const enter = e => {
     e.preventDefault();
-    if (withSound) setSound(true);
     gate.classList.add('off');
     document.body.classList.remove('locked');
     try { sessionStorage.setItem('v01-in', '1'); } catch (err) {}
   };
-  $('#enter').addEventListener('click', e => enter(e, false));
-  $('#enterSound').addEventListener('click', e => enter(e, true));
+  $('#enter').addEventListener('click', enter);
 
   /* обратный отсчёт: 07.11 18:00 МСК */
   const start = Date.UTC(2026, 10, 7, 15), end = Date.UTC(2026, 10, 8, 1);
