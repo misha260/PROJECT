@@ -84,7 +84,7 @@
   });
 
   /* кракозябры: текст периодически «сыпется» */
-  const noise = '�▒░▓ЃЌЉЊЋЏђѓќљњћџ¦§©¬®°±µ¶·';
+  const noise = '\uFFFD▒░▓ЃЌЉЊЋЏђѓќљњћџ¦§©¬®°±µ¶·';
   const mojis = $$('[data-moji]').map(el => ({ el, base: el.textContent }));
   if (!reduce && mojis.length) setInterval(() => {
     const m = mojis[Math.floor(Math.random() * mojis.length)];
