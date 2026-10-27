@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="ru" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VOLUME01 — Matveykin × wiluji · 07.11 · fābula HQ</title>
+<meta name="description" content="Дело № 07/11. Объект «VOLUME» открывают снова. 07.11, fābula HQ, Самокатная 4с1. Matveykin × wiluji + 27 фигурантов.">
+<meta name="theme-color" content="#050505">
+<meta property="og:type" content="website">
+<meta property="og:title" content="VOLUME01 — Matveykin × wiluji · 07.11">
+<meta property="og:description" content="Объект закрыт с 2004 года. Бригада №6 не вышла на связь. 07.11 заходит бригада №7.">
+<meta property="og:image" content="assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/unbounded-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/plexmono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/img/teaser-poster.webp" as="image">
+<link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.className='js'</script>
+</head>
+<body>
+
+<!-- ВХОД -->
+<div class="gate" id="gate" role="dialog" aria-label="Вход на объект">
+  <div class="tape tape--gate1" data-tape="НЕ ВХОДИТЬ ● ОБЪЕКТ ЗАКРЫТ ● ВЕДЁТСЯ ВИДЕОНАБЛЮДЕНИЕ"></div>
+  <div class="tape tape--gate2" data-tape="CAUTION ● VOLUME01 ● 07.11 ● ОПАСНАЯ ЗОНА"></div>
+  <div class="gate__in">
+    <p class="mono gate__kicker">ОБЪЕКТ № 07/11 · ЗАКОНСЕРВИРОВАН С 08.11.2004</p>
+    <p class="gate__title">ЗДЕСЬ<br>ТЕМНО</p>
+    <p class="mono gate__note">Света на объекте нет с 2004 года.<br>Дальше — только с фонарём.</p>
+    <button class="btn btn--light" id="enter">ВКЛЮЧИТЬ ФОНАРЬ</button>
+    <button class="gate__snd mono" id="enterSound">войти со звуком</button>
+  </div>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="scan" aria-hidden="true"></div>
+
+<div class="rec mono" aria-hidden="true"><i></i>REC <span id="clock">03:59:00</span></div>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <video class="hero__vid" id="teaser" src="assets/video/teaser.mp4" poster="assets/img/teaser-poster.webp" muted loop playsinline autoplay preload="metadata"></video>
+  <div class="hero__shade"></div>
+  <div class="corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="hero__body">
+    <p class="mono hero__kicker">ДЕЛО № 07/11 · КАМЕРА 02 · ПОДВАЛ</p>
+    <p class="hero__date">7.11 <small>СБ</small></p>
+    <h1 class="title" data-text="VOLUME01">VOLUME01</h1>
+    <p class="hero__heads"><a href="https://t.me/matveykin" target="_blank" rel="noopener">MATVEYKIN</a> <i>×</i> <a href="https://t.me/wiluji" target="_blank" rel="noopener">WILUJI</a></p>
+    <p class="mono hero__place">fābula HQ · Самокатная, 4с1 · Москва</p>
+    <div class="btns">
+      <a class="btn btn--hz" href="https://moscow.qtickets.events/264019-volume01-matveykin-x-wiluji" target="_blank" rel="noopener">БИЛЕТЫ</a>
+      <a class="btn btn--ghost" href="https://t.me/QticketsBuyBot/buy?startapp=264019" target="_blank" rel="noopener">БИЛЕТЫ В ТГ</a>
+    </div>
+  </div>
+  <button class="sound mono" id="sound" aria-pressed="false">ЗВУК <b>ВЫКЛ</b></button>
+  <a class="hero__down mono" href="#case">вскрыть дело ↓</a>
+</header>
+
+<div class="cross" aria-hidden="true">
+  <div class="tape tape--a" data-tape="ПРОХОД ЗАПРЕЩЁН ● VOLUME01 ● 07.11"></div>
+  <div class="tape tape--b" data-tape="ОСТОРОЖНО ● ИДУТ РАБОТЫ ● БРИГАДА №7"></div>
+</div>
+
+<div class="count mono">
+  <span id="cdLabel">ДО ВСКРЫТИЯ ОБЪЕКТА</span>
+  <b id="cd">07.11 · 18:00</b>
+</div>
+
+<main>
+
+<!-- 01 СПРАВКА -->
+<section class="sec" id="case">
+  <h2 class="h"><span class="mono">01 /</span> СПРАВКА</h2>
+
+  <article class="paper" data-reveal>
+    <span class="holes" aria-hidden="true"></span>
+    <header class="paper__head mono">
+      <span>ГУ «ОБЪЕКТНЫЙ НАДЗОР»</span>
+      <span>ДЕЛО № 07/11</span>
+    </header>
+    <p class="paper__title">ОБЪЕКТ «VOLUME»</p>
+    <dl class="paper__dl mono">
+      <dt>Тип</dt><dd>нежилое, ~1 200 м², зал + подвал</dd>
+      <dt>Адрес</dt><dd><span class="rd" tabindex="0" data-alt="Самокатная, 4с1">█████████ █, ██</span></dd>
+      <dt>Статус</dt><dd>законсервирован с 08.11.2004</dd>
+      <dt>Риск</dt><dd class="red">высокий</dd>
+    </dl>
+    <p class="paper__p">В ночь на <b>8 ноября 2004 года</b> в клубе «VOLUME» шла закрывающая вечеринка. В <b>03:59</b> музыка остановилась сама. Когда в зале включили свет, на танцполе не было никого — ни гостей, ни диджея. Единственный выход был заперт изнутри.</p>
+    <p class="paper__p">В центре зала нашли ночного сторожа <span class="rd" tabindex="0" data-alt="Г. Горелова">██ ████████</span>. Причина смерти не установлена. Вертушка всё ещё крутилась. На пластинке не было названия — только надпись маркером: <b>VOLUME01</b>.</p>
+    <p class="paper__p">Объект опечатали. Двадцать два года он стоял закрытым.</p>
+    <span class="stamp stamp--a" aria-hidden="true">СЕКРЕТНО</span>
+    <span class="pen pen--a">соседи говорят — бас был слышен ещё три ночи. из пустого зала</span>
+    <img class="blood blood--a" src="assets/img/blood.webp" alt="" width="320" height="234" loading="lazy">
+  </article>
+
+  <figure class="ev" data-reveal>
+    <div class="ev__ph"><img src="assets/img/party.webp" alt="Архивный кадр: танцпол клуба, 2004" width="405" height="720" loading="lazy"></div>
+    <span class="marker">1</span>
+    <figcaption class="mono">УЛИКА 1 · последний кадр с камеры 02 · 08.11.2004, 03:41</figcaption>
+  </figure>
+</section>
+
+<!-- 02 ЖУРНАЛ -->
+<section class="sec" id="log">
+  <h2 class="h"><span class="mono">02 /</span> ЖУРНАЛ РАБОТ</h2>
+  <p class="lead mono">В октябре 2026 объект продали. На демонтаж зашла бригада №6 — шесть человек. Ниже — их журнал. Последняя запись сделана 26.10.</p>
+
+  <ol class="log">
+    <li data-reveal>
+      <time class="log__t mono">19.10 · 08:40</time>
+      <p>Заехали. Света нет, щиток мёртвый. Тащим генератор. В главном зале под пылью — разметка танцпола. Колонки на месте, провода перерезаны.</p>
+    </li>
+    <li data-reveal>
+      <time class="log__t mono">20.10 · 23:15</time>
+      <p>Ночная смена. Ринат говорит — слышит бочку. Ровно, как метроном. Я ничего не слышу. Генератор выключен.</p>
+      <span class="pen">сколько BPM?? 140?</span>
+    </li>
+    <li data-reveal>
+      <time class="log__t mono">21.10 · 02:47</time>
+      <p>Огородили зал лентой. Утром лента была натянута заново — внутри зала, по кругу. Как будто кто-то отметил танцпол.</p>
+    </li>
+  </ol>
+
+  <figure class="ev ev--tilt" data-reveal>
+    <div class="ev__ph"><img src="assets/img/tape-floor.webp" alt="Сигнальная лента на полу в луче фонаря" width="540" height="720" loading="lazy"></div>
+    <span class="marker">2</span>
+    <figcaption class="mono">УЛИКА 2 · главный зал · 21.10, 06:10</figcaption>
+  </figure>
+
+  <ol class="log">
+    <li data-reveal>
+      <time class="log__t mono">22.10 · 04:00</time>
+      <p>В диджейской будке нашли кассету. На корешке маркером: <b>VOLUME01</b>. В подсобке телевизор показывает помехи. Он не включён в сеть.</p>
+    </li>
+  </ol>
+
+  <div class="duo">
+    <figure class="ev" data-reveal>
+      <div class="ev__ph"><img src="assets/img/vhs.webp" alt="Кассету вставляют в видеомагнитофон" width="720" height="540" loading="lazy"></div>
+      <span class="marker">3</span>
+      <figcaption class="mono">УЛИКА 3 · кассета</figcaption>
+    </figure>
+    <figure class="ev ev--tv" data-reveal>
+      <div class="ev__ph"><img src="assets/img/tv.webp" alt="Телевизор с помехами в темноте" width="540" height="720" loading="lazy"></div>
+      <span class="marker">4</span>
+      <figcaption class="mono">УЛИКА 4 · подсобка</figcaption>
+    </figure>
+  </div>
+
+  <ol class="log">
+    <li data-reveal>
+      <time class="log__t mono">24.10 · 03:59</time>
+      <p>Пропал Ринат. На лестнице в подвал — его каска и жилет. Жилет светился. Фонари мы не включали.</p>
+      <span class="pen">опять 03:59</span>
+    </li>
+  </ol>
+
+  <div class="duo">
+    <figure class="ev" data-reveal>
+      <div class="ev__ph"><img src="assets/img/cone-stairs.webp" alt="Конус на лестнице в подвал" width="270" height="360" loading="lazy"></div>
+      <span class="marker">5</span>
+      <figcaption class="mono">УЛИКА 5 · лестница B1</figcaption>
+    </figure>
+    <figure class="ev" data-reveal>
+      <div class="ev__ph"><img src="assets/img/helmet-glow.webp" alt="Светящаяся каска и жилет в полной темноте" width="540" height="720" loading="lazy"></div>
+      <span class="marker">6</span>
+      <figcaption class="mono">УЛИКА 6 · жилет Рината</figcaption>
+    </figure>
+  </div>
+
+  <ol class="log">
+    <li data-reveal>
+      <time class="log__t mono">25.10 · ??:??</time>
+      <p>Внизу вода по щиколотку. Под водой плитка. Часы встали. Снизу слышно, как кто-то танцует.</p>
+    </li>
+  </ol>
+
+  <figure class="ev ev--wide" data-reveal>
+    <div class="ev__ph"><img src="assets/img/stairs-water.webp" alt="Затопленные лестницы из белой плитки" width="405" height="720" loading="lazy"></div>
+    <span class="marker">7</span>
+    <figcaption class="mono">УЛИКА 7 · уровень B2 · затоплен</figcaption>
+  </figure>
+
+  <ol class="log">
+    <li data-reveal class="log__last">
+      <time class="log__t mono">26.10 · 03:59</time>
+      <p>Включили кассету. Они все там, внизу. Двадцать восемь лиц на плёнке. Они смотрят прямо в камеру и не перестают двигаться.</p>
+      <p class="log__end">Если ты это читаешь — не выключай звук. Пока играет музыка, они</p>
+      <span class="pen pen--red">запись обрывается</span>
+    </li>
+  </ol>
+</section>
+
+<!-- 03 ПРОТОКОЛ -->
+<section class="sec" id="protocol">
+  <h2 class="h"><span class="mono">03 /</span> ПРОТОКОЛ</h2>
+
+  <article class="paper paper--tilt" data-reveal>
+    <span class="holes" aria-hidden="true"></span>
+    <header class="paper__head mono">
+      <span>ПРОТОКОЛ ОСМОТРА</span>
+      <span>27.10.2026</span>
+    </header>
+    <p class="paper__title">НА ОБЪЕКТЕ ОБНАРУЖЕНО</p>
+    <ul class="paper__list mono">
+      <li><span>Каски строительные</span><b>6 шт.</b></li>
+      <li><span>Жилеты сигнальные (светятся без источника)</span><b>6 шт.</b></li>
+      <li><span>Лента сигнальная, натянута по кругу</span><b>140 м</b></li>
+      <li><span>Кассета VHS «VOLUME01»</span><b>1 шт.</b></li>
+      <li><span>Усилитель, работает без питания</span><b>1 шт.</b></li>
+      <li><span>Бригада №6</span><b class="red">не найдена</b></li>
+    </ul>
+    <p class="paper__p"><b>Заключение:</b> закрыть объект не удаётся. Звук не выключается. Принято решение открыть объект повторно <b>07.11 в 18:00</b> и набрать бригаду №7.</p>
+    <span class="stamp stamp--b" aria-hidden="true">ДОПУСК ОТКРЫТ</span>
+    <span class="pen pen--b">бригада №7 — это вы ↓</span>
+    <img class="helmet-doc" src="assets/img/helmet.webp" alt="" width="360" height="283" loading="lazy">
+  </article>
+</section>
+
+<div class="cross cross--sm" aria-hidden="true">
+  <div class="tape tape--a" data-tape="ЛИЦА НА ПЛЁНКЕ ● ОПОЗНАНИЕ ● VOLUME01"></div>
+</div>
+
+<!-- 04 ФИГУРАНТЫ -->
+<section class="sec" id="lineup">
+  <h2 class="h"><span class="mono">04 /</span> ФИГУРАНТЫ</h2>
+  <p class="lead mono">Двадцать восемь лиц, опознанных на плёнке VOLUME01. Все они будут на объекте 07.11.</p>
+
+  <div class="heads" data-reveal>
+    <p class="mono heads__k">ГЛАВНЫЕ ФИГУРАНТЫ</p>
+    <a class="heads__n refl" href="https://t.me/matveykin" target="_blank" rel="noopener">MATVEYKIN</a>
+    <span class="heads__x">×</span>
+    <a class="heads__n refl" href="https://t.me/wiluji" target="_blank" rel="noopener">WILUJI</a>
+  </div>
+
+  <ol class="roster">
+    <li><a href="https://t.me/platovoplomo3k55" target="_blank" rel="noopener"><span class="refl">platov</span><i>TG</i></a></li>
+    <li><a href="https://www.instagram.com/soylo._k" target="_blank" rel="noopener"><span class="refl">Sir Soylok</span><i>IG</i></a></li>
+    <li><a href="https://www.instagram.com/arschy" target="_blank" rel="noopener"><span class="refl">Arschy</span><i>IG</i></a></li>
+    <li><a href="https://t.me/mad_golem" target="_blank" rel="noopener"><span class="refl">Fakov</span><i>TG</i></a></li>
+    <li><a href="https://t.me/fbsfbsfbsfbsfbs" target="_blank" rel="noopener"><span class="refl">FBS</span><i>TG</i></a></li>
+    <li><a href="https://t.me/jessieluckyo" target="_blank" rel="noopener"><span class="refl">Jessie Luck</span><i>TG</i></a></li>
+    <li><a href="https://t.me/claytcarter1" target="_blank" rel="noopener"><span class="refl">Clayt Carter</span><i>TG</i></a></li>
+    <li><a href="https://t.me/sincere_3" target="_blank" rel="noopener"><span class="refl">dj sincere</span><i>TG</i></a></li>
+    <li><a href="https://t.me/escortcyka" target="_blank" rel="noopener"><span class="refl">PLGTHG</span><i>TG</i></a></li>
+    <li><a href="https://t.me/wiluji" target="_blank" rel="noopener"><span class="refl">wiluji</span><i>TG</i></a></li>
+    <li><a href="https://t.me/bossfight_dubstepceo" target="_blank" rel="noopener"><span class="refl">BOSSFIGHT DUBSTEP CEO</span><i>TG</i></a></li>
+    <li><a href="https://t.me/xxchaikaxx" target="_blank" rel="noopener"><span class="refl">CHAIKA</span><i>TG</i></a></li>
+    <li><a href="https://t.me/wtfshryne" target="_blank" rel="noopener"><span class="refl">wtfshryne</span><i>TG</i></a></li>
+    <li><a href="https://t.me/aymemp3" target="_blank" rel="noopener"><span class="refl">ayme.mp3</span><i>TG</i></a></li>
+    <li><a href="https://t.me/coraleanprod" target="_blank" rel="noopener"><span class="refl">Coralean</span><i>TG</i></a></li>
+    <li><a href="https://t.me/maiiki" target="_blank" rel="noopener"><span class="refl">maiiki</span><i>TG</i></a></li>
+    <li><a href="https://t.me/MPA3EU" target="_blank" rel="noopener"><span class="refl">БИТЬМРАЗЕЙ</span><i>TG</i></a></li>
+    <li><a href="https://www.instagram.com/emozanotti" target="_blank" rel="noopener"><span class="refl">DJ EMOZANOTTI</span><i>IG</i></a></li>
+    <li><a href="https://t.me/xtcnalchik" target="_blank" rel="noopener"><span class="refl">crystal cl3ar</span><i>TG</i></a></li>
+    <li><a href="https://t.me/rapperrapperrapper" target="_blank" rel="noopener"><span class="refl">Rapper #2</span><i>TG</i></a></li>
+    <li><a href="https://t.me/exohadexo" target="_blank" rel="noopener"><span class="refl">exo</span><i>TG</i></a></li>
+    <li><a href="https://www.instagram.com/lovdeluxe_" target="_blank" rel="noopener"><span class="refl">lovdlx</span><i>IG</i></a></li>
+    <li><a href="https://t.me/isoterictells" target="_blank" rel="noopener"><span class="refl">aprilveahcu</span><i>TG</i></a></li>
+    <li><a href="https://t.me/godwhatamidoingwithmylife" target="_blank" rel="noopener"><span class="refl">AntiFreakNa</span><i>TG</i></a></li>
+    <li><a href="https://www.instagram.com/unknwn.user296765771" target="_blank" rel="noopener"><span class="refl">unknwn.user296765771</span><i>IG</i></a></li>
+    <li><a href="https://t.me/achtungia" target="_blank" rel="noopener"><span class="refl">Achtungia</span><i>TG</i></a></li>
+    <li><a href="https://t.me/zvukiraja" target="_blank" rel="noopener"><span class="refl">zvukiraja</span><i>TG</i></a></li>
+    <li class="roster__secret"><span class="rd" tabindex="0" data-alt="личность не установлена">████████ ███</span></li>
+    <li class="roster__secret"><span class="rd" tabindex="0" data-alt="опознание на месте">██████ ████████</span></li>
+  </ol>
+  <p class="mono secret">+ SECRET GUESTS · лица на плёнке не опознаны</p>
+</section>
+
+<!-- 05 ТАКЖЕ -->
+<section class="sec" id="market">
+  <h2 class="h"><span class="mono">05 /</span> ТАКЖЕ НА ОБЪЕКТЕ</h2>
+  <ul class="market">
+    <li><a href="https://t.me/kobait" target="_blank" rel="noopener">kobai <i>↗</i></a></li>
+    <li><a href="https://t.me/Hocus_clo" target="_blank" rel="noopener">hocus <i>↗</i></a></li>
+    <li><span>merch</span></li>
+    <li><span>barber</span></li>
+    <li><span>…</span></li>
+  </ul>
+</section>
+
+<!-- 06 ДОПУСК -->
+<section class="sec" id="access">
+  <h2 class="h"><span class="mono">06 /</span> ДОПУСК</h2>
+
+  <div class="pass" data-reveal>
+    <div class="pass__hz" aria-hidden="true"></div>
+    <div class="pass__in">
+      <p class="mono pass__k">ПРОПУСК · БРИГАДА №7</p>
+      <p class="pass__date">07.11 <small>СБ</small></p>
+      <div class="pass__shifts">
+        <div><p class="mono">СМЕНА 1</p><b>18:00—23:00</b><span class="age">16+</span></div>
+        <div><p class="mono">СМЕНА 2</p><b>23:00—04:00</b><span class="age age--r">18+</span></div>
+      </div>
+      <a class="pass__addr" href="https://yandex.ru/maps/?text=%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D0%A1%D0%B0%D0%BC%D0%BE%D0%BA%D0%B0%D1%82%D0%BD%D0%B0%D1%8F%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%2C%204%D1%811" target="_blank" rel="noopener">
+        <span class="mono">ОБЪЕКТ</span>
+        <b>fābula HQ</b>
+        <span>Москва, Самокатная ул., 4, стр. 1</span>
+        <i class="mono">маршрут ↗</i>
+      </a>
+      <a class="pass__venue mono" href="https://t.me/fabula_gallery" target="_blank" rel="noopener">@fabula_gallery ↗</a>
+      <div class="btns btns--col">
+        <a class="btn btn--hz" href="https://moscow.qtickets.events/264019-volume01-matveykin-x-wiluji" target="_blank" rel="noopener">КУПИТЬ БИЛЕТ</a>
+        <a class="btn btn--ghost" href="https://t.me/QticketsBuyBot/buy?startapp=264019" target="_blank" rel="noopener">БИЛЕТЫ В ТЕЛЕГРАМ</a>
+      </div>
+    </div>
+    <div class="pass__hz" aria-hidden="true"></div>
+  </div>
+
+  <figure class="ev ev--poster" data-reveal>
+    <div class="ev__ph"><img src="assets/img/poster.webp" alt="Афиша VOLUME01: Matveykin × wiluji, 7.11, fābula HQ" width="565" height="800" loading="lazy"></div>
+    <span class="marker">8</span>
+    <figcaption class="mono">УЛИКА 8 · листовка, найдена у входа</figcaption>
+  </figure>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="tape tape--foot" data-tape="VOLUME01 ● 07.11 ● fābula HQ ● НЕ ВЫКЛЮЧАЙ ЗВУК"></div>
+  <p class="mono">Все события и персонажи вымышлены.<br>Любые совпадения случайны. Наверное.</p>
+  <p class="mono foot__org"><a href="https://t.me/matveykin" target="_blank" rel="noopener">matveykin</a> × <a href="https://t.me/wiluji" target="_blank" rel="noopener">wiluji</a> · 2026</p>
+</footer>
+
+<a class="sticky" id="sticky" href="https://moscow.qtickets.events/264019-volume01-matveykin-x-wiluji" target="_blank" rel="noopener">
+  <span>БИЛЕТЫ</span><span class="mono">07.11 · fābula HQ →</span>
+</a>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>
