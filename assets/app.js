@@ -83,6 +83,16 @@
     el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
   });
 
+  /* кракозябры: текст периодически «сыпется» */
+  const noise = '�▒░▓ЃЌЉЊЋЏђѓќљњћџ¦§©¬®°±µ¶·';
+  const mojis = $$('[data-moji]').map(el => ({ el, base: el.textContent }));
+  if (!reduce && mojis.length) setInterval(() => {
+    const m = mojis[Math.floor(Math.random() * mojis.length)];
+    m.el.textContent = [...m.base].map(c => c !== ' ' && Math.random() < .3 ? noise[Math.floor(Math.random() * noise.length)] : c).join('');
+    m.el.classList.add('glitch');
+    setTimeout(() => { m.el.textContent = m.base; m.el.classList.remove('glitch'); }, 140 + Math.random() * 200);
+  }, 700);
+
   /* фото «проявляются» при скролле */
   const io = new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
