@@ -113,6 +113,7 @@
     cancel: () => { $('#progLeft').textContent = 'Невозможно отменить: файл используется другим процессом (svet.dll).'; },
     print: () => say('Печать', 'Принтер не найден. Подключите принтер к LPT1 и повторите попытку.'),
     mail: () => say('Outlook Express', 'Не удалось отправить сообщение: сервер SMTP volume01.narod.ru не отвечает.'),
+    comment: () => say('Комментарии', 'Комментарии к этой записи отключены владельцем журнала.'),
     cart: () => say('Корзина', 'Корзина недоступна. Покупка только на объекте 07.11 с 18:00 до 04:00.')
   };
   document.addEventListener('click', e => {
@@ -124,9 +125,10 @@
 
   /* навязчивая реклама маркета: появляется, пока человек сидит на сайте */
   const ads = [
-    { t: 'kobai.exe — Реклама', b: 'МАРКЕТ НА ОБЪЕКТЕ!!!', s: 'kobai · hocus · merch · barber<br>07.11 · 18:00 — 04:00 · fābula HQ', c: 'ЖМИ СЮДА »' },
-    { t: 'hocus.exe — Реклама', b: 'HOCUS НА ОБЪЕКТЕ', s: 'одежда · маркет VOLUME01<br>только 07.11', c: 'СМОТРЕТЬ »' },
-    { t: 'barber.exe — Реклама', b: 'БАРБЕР НА ОБЪЕКТЕ', s: 'стрижка прямо на ивенте<br>07.11 · fābula HQ', c: 'ПОДРОБНЕЕ »' }
+    { t: 'jessie_luck.exe — Реклама', img: 'shop-gentle-1', b: 'ХИТ! CD-БРЕЛОК', s: 'Jessie Luck — Gentle<br>в наличии на объекте 07.11', c: 'КУПИТЬ »', h: '#shop' },
+    { t: 'ck.exe — Реклама', img: 'shop-ck-3', b: 'NEW!!! ck', s: 'FORTUNA 812 &amp; Clayt Carter<br>CD-брелок на цепочке', c: 'ХОЧУ »', h: '#shop' },
+    { t: 'whitetrash.exe — Реклама', img: 'whitetrash', b: 'WHITE TRASH', s: 'сэмплы капсулы<br>только 07.11 в Фабуле', c: 'ПОДРОБНЕЕ »', h: '#posts' },
+    { t: 'kobai.exe — Реклама', b: 'МАРКЕТ НА ОБЪЕКТЕ!!!', s: 'kobai · hocus · merch · barber<br>07.11 · 18:00 — 04:00 · fābula HQ', c: 'ЖМИ СЮДА »', h: '#shop' }
   ];
   const adpop = $('#adpop'), adX = $('#adX');
   let adN = 0, dodged = false;
@@ -136,7 +138,9 @@
     const a = ads[adN++];
     try { sessionStorage.setItem('v01-ads', adN); } catch (e) {}
     $('#adTitle').textContent = a.t;
-    $('#adBody').innerHTML = `<b>${a.b}</b><span>${a.s}</span><i>${a.c}</i>`;
+    const body = $('#adBody');
+    body.href = a.h;
+    body.innerHTML = (a.img ? `<img src="assets/img/t/${a.img}.webp" alt="">` : '') + `<b>${a.b}</b><span>${a.s}</span><i>${a.c}</i>`;
     dodged = false; adX.style.transform = '';
     adpop.hidden = false;
   };
@@ -147,7 +151,7 @@
     hideAd();
   });
   $('#adBody').addEventListener('click', hideAd);
-  [25000, 75000, 150000].forEach(t => setTimeout(showAd, t));
+  [20000, 60000, 110000, 180000].forEach(t => setTimeout(showAd, t));
 
   /* копирование кассеты: доходит до 99% и встаёт */
   const prog = $('#prog'), progLeft = $('#progLeft');
@@ -185,7 +189,7 @@
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-img]');
     if (t) { e.preventDefault(); openLb(`assets/img/${t.dataset.img}.webp`, t.textContent.trim()); return; }
-    const img = e.target.closest('.ph img, .strip img, .docscan img');
+    const img = e.target.closest('.ph img, .strip img, .docscan img, .plan img, .prod__img img');
     if (img && !img.closest('.ph--poster a')) {
       const fig = img.closest('figure');
       const cap = fig && (fig.querySelector('figcaption') || fig.querySelector('.ts'));
@@ -242,4 +246,237 @@
     });
     raf = requestAnimationFrame(loop);
   }
+
+  /* ---------- плеер ---------- */
+  const audio = $('#ampAudio'), plItems = $$('#ampList li');
+  const ampTime = $('#ampTime'), ampTitle = $('#ampTitle'), ampState = $('#ampState'), ampSeek = $('#ampSeek'), ampCover = $('#ampCover');
+  const vis = $('#ampVis'), vctx = vis.getContext('2d');
+  let cur = -1, actx = null, analyser = null, freq = null, visRaf = 0;
+  const fmt = t => `${pad(Math.floor(t / 60))}:${pad(Math.floor(t % 60))}`;
+  const loadTrack = i => {
+    cur = (i + plItems.length) % plItems.length;
+    const li = plItems[cur];
+    audio.src = li.dataset.src;
+    ampCover.src = li.dataset.cover;
+    ampTitle.textContent = `${cur + 1}. ${li.querySelector('span').textContent} (${li.querySelector('i').textContent}) *** `;
+    plItems.forEach((x, k) => x.classList.toggle('on', k === cur));
+  };
+  const initAnalyser = () => {
+    if (actx) return;
+    try {
+      actx = new (window.AudioContext || window.webkitAudioContext)();
+      const src = actx.createMediaElementSource(audio);
+      analyser = actx.createAnalyser(); analyser.fftSize = 64;
+      src.connect(analyser); analyser.connect(actx.destination);
+      freq = new Uint8Array(analyser.frequencyBinCount);
+    } catch (e) { actx = null; analyser = null; }
+  };
+  const drawVis = () => {
+    const w = vis.width, h = vis.height;
+    vctx.fillStyle = '#000'; vctx.fillRect(0, 0, w, h);
+    const bars = 19, bw = 7;
+    if (analyser) analyser.getByteFrequencyData(freq);
+    for (let i = 0; i < bars; i++) {
+      const v = analyser ? freq[i + 1] / 255 : (audio.paused ? 0 : Math.random() * .6);
+      const bh = Math.max(1, Math.round(v * h));
+      for (let y = 0; y < bh; y += 2) {
+        vctx.fillStyle = y > h * .75 ? '#e33' : y > h * .5 ? '#ee3' : '#3d3';
+        vctx.fillRect(i * (bw + 1), h - y - 1, bw, 1);
+      }
+    }
+    if (!audio.paused) visRaf = requestAnimationFrame(drawVis); else visRaf = 0;
+  };
+  const silenceOthers = () => {
+    if (!video.muted) setSound(false);
+    if (tvVideo && !tvVideo.muted) setTvSound(false);
+  };
+  const ampPlay = () => {
+    if (cur < 0) loadTrack(0);
+    initAnalyser();
+    if (actx && actx.state === 'suspended') actx.resume();
+    silenceOthers();
+    audio.play().catch(() => {});
+  };
+  $('#ampPlay').addEventListener('click', ampPlay);
+  $('#ampPause').addEventListener('click', () => audio.pause());
+  $('#ampStop').addEventListener('click', () => { audio.pause(); audio.currentTime = 0; ampState.textContent = 'stop'; });
+  $('#ampPrev').addEventListener('click', () => { loadTrack(cur - 1); ampPlay(); });
+  $('#ampNext').addEventListener('click', () => { loadTrack(cur + 1); ampPlay(); });
+  plItems.forEach((li, i) => {
+    li.tabIndex = 0;
+    const go = () => { loadTrack(i); ampPlay(); };
+    li.addEventListener('click', go);
+    li.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+  });
+  $('#ampVol').addEventListener('input', e => { audio.volume = e.target.value / 100; });
+  audio.volume = .8;
+  ampSeek.addEventListener('input', () => { if (audio.duration) audio.currentTime = ampSeek.value / 1000 * audio.duration; });
+  audio.addEventListener('timeupdate', () => {
+    ampTime.textContent = fmt(audio.currentTime);
+    if (audio.duration) ampSeek.value = Math.round(audio.currentTime / audio.duration * 1000);
+  });
+  audio.addEventListener('play', () => { ampState.textContent = 'play'; if (!visRaf) visRaf = requestAnimationFrame(drawVis); });
+  audio.addEventListener('pause', () => { if (audio.currentTime) ampState.textContent = 'pause'; });
+  audio.addEventListener('ended', () => { loadTrack(cur + 1); ampPlay(); });
+  drawVis();
+
+  /* ---------- телевизор: 5 каналов ---------- */
+  const channels = [
+    { src: 'assets/video/tv-fakov.mp4', poster: 'assets/img/tv/tv-fakov.webp', name: 'Fakov — клип' },
+    { src: 'assets/video/tv-fbs.mp4', poster: 'assets/img/tv/tv-fbs.webp', name: 'FBS — клип' },
+    { src: 'assets/video/tv-platov.mp4', poster: 'assets/img/tv/tv-platov.webp', name: 'platov — TWO BAGZ (sg080) · анимация d3n' },
+    { src: 'assets/video/tv-druma.mp4', poster: 'assets/img/tv/tv-druma.webp', name: 'D R U M A' },
+    { src: 'assets/video/whitetrash.mp4', poster: 'assets/img/tv/whitetrash.webp', name: 'White Trash — 07 November', fit: 'contain' }
+  ];
+  const crt = $('#tv'), tvVideo = $('#tvVideo'), tvSub = $('#tvSub'), tvCh = $('#tvCh'), tvSnd = $('#tvSnd');
+  const tvNoise = $('#tvNoise'), nctx = tvNoise.getContext('2d');
+  const nimg = nctx.createImageData(tvNoise.width, tvNoise.height);
+  let noiseRaf = 0, tvOn = false;
+  const drawNoise = () => {
+    const d = nimg.data;
+    for (let i = 0; i < d.length; i += 4) { const v = Math.random() * 255 | 0; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255; }
+    nctx.putImageData(nimg, 0, 0);
+    noiseRaf = crt.classList.contains('static') ? requestAnimationFrame(drawNoise) : 0;
+  };
+  const staticBurst = ms => {
+    crt.classList.add('static');
+    if (!noiseRaf) noiseRaf = requestAnimationFrame(drawNoise);
+    setTimeout(() => crt.classList.remove('static'), reduce ? 0 : ms);
+  };
+  function setTvSound(on) {
+    tvVideo.muted = !on;
+    tvSnd.setAttribute('aria-pressed', on);
+    if (on) { if (!audio.paused) audio.pause(); if (!video.muted) setSound(false); }
+  }
+  tvVideo.muted = true;
+  const tune = i => {
+    const ch = channels[i];
+    staticBurst(380);
+    tvVideo.src = ch.src; tvVideo.poster = ch.poster; tvVideo.style.objectFit = ch.fit || 'cover';
+    tvVideo.loop = true;
+    tvVideo.play().catch(() => {});
+    tvCh.textContent = `CH ${pad(i + 1)}`;
+    tvSub.textContent = ch.name;
+    $$('.crt__btn[data-ch]').forEach(b => b.classList.toggle('on', +b.dataset.ch === i));
+    crt.classList.add('live'); tvOn = true;
+  };
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-ch]');
+    if (b) tune(+b.dataset.ch);
+  });
+  tvSnd.addEventListener('click', () => setTvSound(tvVideo.muted));
+  $('#tvPwr').addEventListener('click', () => {
+    tvVideo.pause(); tvVideo.removeAttribute('src'); tvVideo.load();
+    crt.classList.remove('live'); tvOn = false; tvSub.textContent = 'Нажми на канал.';
+    $$('.crt__btn[data-ch]').forEach(b => b.classList.remove('on'));
+    staticBurst(250);
+  });
+  new IntersectionObserver(([e]) => {
+    if (!tvOn) return;
+    if (e.isIntersecting) tvVideo.play().catch(() => {}); else tvVideo.pause();
+  }, { threshold: .2 }).observe(crt);
+
+  /* ---------- мини-игра VOLUME01.EXE ---------- */
+  const gc = $('#gCanvas'), g = gc.getContext('2d'), gStart = $('#gStart');
+  const gV = $('#gVests'), gT = $('#gTime'), gB = $('#gBest');
+  const W = gc.width, H = gc.height, keys = {};
+  let best = 0, st = null, gRaf = 0, gVisible = false;
+  try { best = +localStorage.getItem('v01-best') || 0; } catch (e) {}
+  gB.textContent = best;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const newGame = () => {
+    const vests = Array.from({ length: 6 }, () => ({ x: rnd(10, W - 14), y: rnd(14, H - 14), got: false }));
+    const dancers = Array.from({ length: 3 }, (_, i) => ({ x: [10, W - 14, W / 2][i], y: [H - 14, 12, H - 12][i], ph: rnd(0, 6) }));
+    return { p: { x: W / 2, y: H / 2 }, vests, dancers, got: 0, t: 239, last: performance.now(), over: false, win: false };
+  };
+  const drawWorker = (x, y) => {
+    g.fillStyle = '#f2c400'; g.fillRect(x - 3, y - 7, 6, 3);
+    g.fillStyle = '#e0b090'; g.fillRect(x - 2, y - 4, 4, 2);
+    g.fillStyle = '#ff6a00'; g.fillRect(x - 3, y - 2, 6, 6);
+    g.fillStyle = '#fff'; g.fillRect(x - 3, y, 6, 1); g.fillRect(x - 1, y - 2, 1, 6);
+    g.fillStyle = '#223'; g.fillRect(x - 3, y + 4, 2, 3); g.fillRect(x + 1, y + 4, 2, 3);
+  };
+  const drawDancer = (d, t) => {
+    const bob = Math.sin(t / 120 + d.ph) * 1.5 | 0, arm = Math.sin(t / 90 + d.ph) > 0 ? -3 : 1;
+    g.fillStyle = '#d8d8d8'; g.fillRect(d.x - 3, d.y - 8 + bob, 6, 5);
+    g.fillStyle = '#111'; g.fillRect(d.x - 2, d.y - 6 + bob, 1, 1); g.fillRect(d.x + 1, d.y - 6 + bob, 1, 1);
+    g.fillStyle = '#2a2a2a'; g.fillRect(d.x - 3, d.y - 3 + bob, 6, 7);
+    g.fillRect(d.x - 5, d.y + arm + bob, 2, 3); g.fillRect(d.x + 3, d.y - arm - 2 + bob, 2, 3);
+  };
+  const drawVest = (v, t) => {
+    const glow = Math.sin(t / 200 + v.x) * .3 + .7;
+    g.fillStyle = `rgba(255,120,0,${glow})`; g.fillRect(v.x - 3, v.y - 3, 6, 7);
+    g.fillStyle = `rgba(255,255,255,${glow})`; g.fillRect(v.x - 3, v.y, 6, 1); g.fillRect(v.x - 2, v.y - 3, 1, 7); g.fillRect(v.x + 1, v.y - 3, 1, 7);
+  };
+  const render = t => {
+    g.fillStyle = '#0d0d0d'; g.fillRect(0, 0, W, H);
+    g.fillStyle = '#1a1a1a';
+    for (let x = 0; x < W; x += 10) g.fillRect(x, 0, 1, H);
+    for (let y = 0; y < H; y += 10) g.fillRect(0, y, W, 1);
+    g.fillStyle = '#e8e3d6'; g.fillRect(70, 50, 20, 20); g.fillStyle = '#9a958a'; g.fillRect(70, 66, 20, 4);
+    st.dancers.forEach(d => drawDancer(d, t));
+    drawWorker(st.p.x, st.p.y);
+    const grd = g.createRadialGradient(st.p.x, st.p.y, 5, st.p.x, st.p.y, 30);
+    grd.addColorStop(0, 'rgba(0,0,0,0)'); grd.addColorStop(1, 'rgba(0,0,0,.97)');
+    g.fillStyle = grd; g.fillRect(0, 0, W, H);
+    st.vests.forEach(v => { if (!v.got) drawVest(v, t); });
+    g.fillStyle = '#f22';
+    st.dancers.forEach(d => { const bob = Math.sin(t / 120 + d.ph) * 1.5 | 0; g.fillRect(d.x - 2, d.y - 6 + bob, 1, 1); g.fillRect(d.x + 1, d.y - 6 + bob, 1, 1); });
+  };
+  const overlay = (a, b) => {
+    g.fillStyle = 'rgba(0,0,0,.75)'; g.fillRect(0, 40, W, 40);
+    g.fillStyle = '#fff200'; g.font = '9px monospace'; g.textAlign = 'center';
+    g.fillText(a, W / 2, 56); g.fillStyle = '#ddd'; g.font = '7px monospace'; g.fillText(b, W / 2, 68);
+  };
+  const gameOver = win => {
+    st.over = true; st.win = win;
+    const score = st.got;
+    if (score > best) { best = score; gB.textContent = best; try { localStorage.setItem('v01-best', best); } catch (e) {} }
+    render(performance.now());
+    overlay(win ? 'БРИГАДА №7 ПРИНЯТА' : 'СИГНАЛ ПОТЕРЯН', win ? '07.11 · 18:00 · fābula HQ' : `жилетов: ${score}/6`);
+    gStart.textContent = '▶ ЕЩЁ РАЗ'; gStart.hidden = false;
+  };
+  const step = t => {
+    gRaf = 0;
+    if (!st || st.over || !gVisible) return;
+    const dt = Math.min(50, t - st.last); st.last = t;
+    const sp = .055 * dt;
+    if (keys.up) st.p.y -= sp; if (keys.down) st.p.y += sp;
+    if (keys.left) st.p.x -= sp; if (keys.right) st.p.x += sp;
+    st.p.x = Math.max(4, Math.min(W - 4, st.p.x)); st.p.y = Math.max(8, Math.min(H - 6, st.p.y));
+    st.dancers.forEach((d, i) => {
+      const dx = st.p.x - d.x, dy = st.p.y - d.y, dist = Math.hypot(dx, dy) || 1;
+      const ds = (.012 + st.got * .003 + i * .002) * dt;
+      d.x += dx / dist * ds + Math.sin(t / 300 + d.ph) * .15; d.y += dy / dist * ds + Math.cos(t / 260 + d.ph) * .15;
+      if (dist < 5) gameOver(false);
+    });
+    st.vests.forEach(v => { if (!v.got && Math.abs(v.x - st.p.x) < 6 && Math.abs(v.y - st.p.y) < 7) { v.got = true; st.got++; } });
+    st.t -= dt / 1000;
+    gV.textContent = `${st.got}/6`;
+    gT.textContent = `${pad(Math.max(0, Math.floor(st.t / 60)))}:${pad(Math.max(0, Math.floor(st.t % 60)))}`;
+    if (st.over) return;
+    if (st.got === 6) return gameOver(true);
+    if (st.t <= 0) return gameOver(false);
+    render(t);
+    gRaf = requestAnimationFrame(step);
+  };
+  const startGame = () => {
+    st = newGame(); gStart.hidden = true;
+    st.last = performance.now();
+    if (!gRaf) gRaf = requestAnimationFrame(step);
+  };
+  gStart.addEventListener('click', startGame);
+  const dirs = { ArrowUp: 'up', KeyW: 'up', ArrowDown: 'down', KeyS: 'down', ArrowLeft: 'left', KeyA: 'left', ArrowRight: 'right', KeyD: 'right' };
+  addEventListener('keydown', e => { const d = dirs[e.code]; if (d && st && !st.over && gVisible) { keys[d] = true; e.preventDefault(); } });
+  addEventListener('keyup', e => { const d = dirs[e.code]; if (d) keys[d] = false; });
+  $$('.game__pad button').forEach(b => {
+    const d = b.dataset.d;
+    b.addEventListener('pointerdown', e => { e.preventDefault(); keys[d] = true; });
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => b.addEventListener(ev, () => { keys[d] = false; }));
+  });
+  new IntersectionObserver(([e]) => {
+    gVisible = e.isIntersecting;
+    if (gVisible && st && !st.over) { st.last = performance.now(); if (!gRaf) gRaf = requestAnimationFrame(step); }
+  }).observe(gc);
+  st = newGame(); render(0); overlay('VOLUME01.EXE', 'найди 6 жилетов в темноте'); st = null;
 })();
