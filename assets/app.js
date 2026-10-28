@@ -113,7 +113,7 @@
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-img]');
     if (t) { e.preventDefault(); openLb(`assets/img/${t.dataset.img}.webp`, t.textContent.trim()); return; }
-    const img = e.target.closest('.ph img, .strip img, .doc__att img');
+    const img = e.target.closest('.ph img, .strip img, .docscan img');
     if (img && !img.closest('.ph--poster a')) {
       const fig = img.closest('figure');
       const cap = fig && (fig.querySelector('figcaption') || fig.querySelector('.ts'));
