@@ -93,6 +93,55 @@
     setTimeout(() => { m.el.textContent = m.base; m.el.classList.remove('glitch'); }, 140 + Math.random() * 200);
   }, 700);
 
+  /* системные окна */
+  const modal = $('#sysModal'), sysTitle = $('#sysTitle'), sysText = $('#sysText');
+  const toMoji = t => { try { return new TextDecoder('windows-1251').decode(new TextEncoder().encode(t)); } catch (e) { return t; } };
+  const say = (title, text) => { sysTitle.textContent = title; sysText.textContent = text; modal.hidden = false; $('#sysOk').focus(); };
+  const hideModal = () => { modal.hidden = true; };
+  $('#sysOk').addEventListener('click', hideModal);
+  modal.addEventListener('click', e => { if (e.target === modal) hideModal(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) hideModal(); });
+  const errWin = $('#errWin');
+  let crashes = 1;
+  const sys = {
+    fav: () => say('Избранное', 'Не удалось добавить страницу в избранное. Объект не существует с 08.11.2004.'),
+    home: () => say('Microsoft Internet Explorer', 'Стартовая страница не может быть изменена: объект закрыт.'),
+    koi: () => say(toMoji('Кодировка'), toMoji('Кодировка не поддерживается. Выберите WIN.')),
+    dll: () => say('svet.dll', 'Не удаётся открыть файл. Источник света не найден.'),
+    cancel: () => { $('#progLeft').textContent = 'Невозможно отменить: файл используется другим процессом (svet.dll).'; },
+    details: () => { const d = errWin.querySelector('.win__det'); d.hidden = !d.hidden; },
+    close: () => {
+      errWin.classList.add('gone');
+      setTimeout(() => {
+        crashes++;
+        errWin.querySelector('.win__bar span').textContent = `ZHILETY (${crashes})`;
+        errWin.classList.remove('gone');
+      }, 1200);
+    }
+  };
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-sys]');
+    if (!t) return;
+    e.preventDefault();
+    sys[t.dataset.sys] && sys[t.dataset.sys]();
+  });
+
+  /* копирование кассеты: доходит до 99% и встаёт */
+  const prog = $('#prog'), progLeft = $('#progLeft');
+  new IntersectionObserver(([e], o) => {
+    if (!e.isIntersecting) return;
+    o.disconnect();
+    let p = 0, left = 239;
+    const step = () => {
+      p = Math.min(99, p + 3 + Math.random() * 9);
+      left = Math.max(1, Math.round(left * (1 - p / 140)));
+      prog.style.width = p + '%';
+      if (!progLeft.textContent.startsWith('Невозможно')) progLeft.textContent = `Осталось: ${pad(Math.floor(left / 60))}:${pad(left % 60)}`;
+      if (p < 99) setTimeout(step, 380 + Math.random() * 500);
+    };
+    step();
+  }).observe(prog);
+
   /* фото «проявляются» при скролле */
   const io = new IntersectionObserver(entries => entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
