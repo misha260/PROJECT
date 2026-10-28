@@ -478,6 +478,13 @@ p{margin:0 0 1em}
 .prod__gal img{width:56px;height:56px;object-fit:cover;background:#fff;border:1px solid #444;filter:brightness(.9)}
 .shop__t th{text-align:left;font:400 14px var(--team);color:#9a978f;padding:6px 4px;border-bottom:1px solid #333}
 
+/* барбер: столб в полоску */
+.shop__barber td{background:rgba(163,21,26,.12)}
+.shop__barber b{color:#e6e3dc}
+.pole{display:inline-block;width:10px;height:26px;margin-right:6px;vertical-align:-7px;border-radius:5px;border:1px solid #888;
+  background:repeating-linear-gradient(-45deg,#c00 0 5px,#fff 5px 10px,#1d3a9a 10px 15px,#fff 15px 20px) 0 0/28px 28px;animation:pole 1.2s linear infinite}
+@keyframes pole{to{background-position:0 28px}}
+
 /* игра */
 .gamewin{position:fixed;inset:0;z-index:94;display:grid;place-items:center;padding:12px;background:rgba(0,0,0,.6)}
 .gamewin[hidden]{display:none}

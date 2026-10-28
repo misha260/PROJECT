@@ -127,6 +127,7 @@
     { t: 'matveykin_shop.exe — Реклама', img: 'shop-gentle-1', b: 'ХИТ! CD-БРЕЛОК', s: 'Jessie Luck — Gentle<br>заказ в ТГ @jonatanleandoer97', c: 'КУПИТЬ »', h: '#shop' },
     { t: 'ck.exe — Реклама', img: 'shop-ck-3', b: 'NEW!!! ck', s: 'FORTUNA 812 &amp; Clayt Carter<br>CD-брелок · Matveykin Shop', c: 'ХОЧУ »', h: '#shop' },
     { t: 'whitetrash.exe — Реклама', img: 'whitetrash', b: 'WHITE TRASH', s: 'сэмплы капсулы<br>только 07.11 в Фабуле', c: 'ПОДРОБНЕЕ »', h: '#posts' },
+    { t: 'barber.exe — Реклама', b: 'СТРИЖКА НА ИВЕНТЕ', s: 'барбер на объекте 07.11<br>запись — услугой в билетах', c: 'ЗАПИСАТЬСЯ »', h: '#shop' },
     { t: 'kobai.exe — Реклама', b: 'МАРКЕТ НА ОБЪЕКТЕ!!!', s: 'kobai · hocus · merch · barber<br>07.11 · 18:00 — 04:00 · fābula HQ', c: 'ЖМИ СЮДА »', h: '#shop' }
   ];
   const adpop = $('#adpop'), adX = $('#adX');
@@ -145,7 +146,7 @@
   const hideAd = () => { adpop.hidden = true; };
   adX.addEventListener('click', hideAd);
   $('#adBody').addEventListener('click', hideAd);
-  [20000, 60000, 110000, 180000].forEach(t => setTimeout(showAd, t));
+  [20000, 60000, 110000, 180000, 240000].forEach(t => setTimeout(showAd, t));
 
   /* фото «проявляются» при скролле */
   const io = new IntersectionObserver(entries => entries.forEach(e => {
