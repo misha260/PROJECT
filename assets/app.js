@@ -110,7 +110,6 @@
     home: () => say('Microsoft Internet Explorer', 'Стартовая страница не может быть изменена: объект закрыт.'),
     koi: () => say(toMoji('Кодировка'), toMoji('Кодировка не поддерживается. Выберите WIN.')),
     dll: () => say('svet.dll', 'Не удаётся открыть файл. Источник света не найден.'),
-    cancel: () => { $('#progLeft').textContent = 'Невозможно отменить: файл используется другим процессом (svet.dll).'; },
     print: () => say('Печать', 'Принтер не найден. Подключите принтер к LPT1 и повторите попытку.'),
     mail: () => say('Outlook Express', 'Не удалось отправить сообщение: сервер SMTP volume01.narod.ru не отвечает.'),
     comment: () => say('Комментарии', 'Комментарии к этой записи отключены владельцем журнала.'),
@@ -125,13 +124,13 @@
 
   /* навязчивая реклама маркета: появляется, пока человек сидит на сайте */
   const ads = [
-    { t: 'jessie_luck.exe — Реклама', img: 'shop-gentle-1', b: 'ХИТ! CD-БРЕЛОК', s: 'Jessie Luck — Gentle<br>в наличии на объекте 07.11', c: 'КУПИТЬ »', h: '#shop' },
-    { t: 'ck.exe — Реклама', img: 'shop-ck-3', b: 'NEW!!! ck', s: 'FORTUNA 812 &amp; Clayt Carter<br>CD-брелок на цепочке', c: 'ХОЧУ »', h: '#shop' },
+    { t: 'matveykin_shop.exe — Реклама', img: 'shop-gentle-1', b: 'ХИТ! CD-БРЕЛОК', s: 'Jessie Luck — Gentle<br>заказ в ТГ @jonatanleandoer97', c: 'КУПИТЬ »', h: '#shop' },
+    { t: 'ck.exe — Реклама', img: 'shop-ck-3', b: 'NEW!!! ck', s: 'FORTUNA 812 &amp; Clayt Carter<br>CD-брелок · Matveykin Shop', c: 'ХОЧУ »', h: '#shop' },
     { t: 'whitetrash.exe — Реклама', img: 'whitetrash', b: 'WHITE TRASH', s: 'сэмплы капсулы<br>только 07.11 в Фабуле', c: 'ПОДРОБНЕЕ »', h: '#posts' },
     { t: 'kobai.exe — Реклама', b: 'МАРКЕТ НА ОБЪЕКТЕ!!!', s: 'kobai · hocus · merch · barber<br>07.11 · 18:00 — 04:00 · fābula HQ', c: 'ЖМИ СЮДА »', h: '#shop' }
   ];
   const adpop = $('#adpop'), adX = $('#adX');
-  let adN = 0, dodged = false;
+  let adN = 0;
   try { adN = +sessionStorage.getItem('v01-ads') || 0; } catch (e) {}
   const showAd = () => {
     if (adN >= ads.length || !lb.hidden || !modal.hidden || !gate.classList.contains('off')) return;
@@ -141,33 +140,12 @@
     const body = $('#adBody');
     body.href = a.h;
     body.innerHTML = (a.img ? `<img src="assets/img/t/${a.img}.webp" alt="">` : '') + `<b>${a.b}</b><span>${a.s}</span><i>${a.c}</i>`;
-    dodged = false; adX.style.transform = '';
     adpop.hidden = false;
   };
   const hideAd = () => { adpop.hidden = true; };
-  adX.addEventListener('click', () => {
-    // первый раз крестик «убегает», как на старых баннерах
-    if (!dodged && !reduce) { dodged = true; adX.style.transform = `translate(${-40 - Math.random() * 60}px, ${10 + Math.random() * 30}px)`; return; }
-    hideAd();
-  });
+  adX.addEventListener('click', hideAd);
   $('#adBody').addEventListener('click', hideAd);
   [20000, 60000, 110000, 180000].forEach(t => setTimeout(showAd, t));
-
-  /* копирование кассеты: доходит до 99% и встаёт */
-  const prog = $('#prog'), progLeft = $('#progLeft');
-  new IntersectionObserver(([e], o) => {
-    if (!e.isIntersecting) return;
-    o.disconnect();
-    let p = 0, left = 239;
-    const step = () => {
-      p = Math.min(99, p + 3 + Math.random() * 9);
-      left = Math.max(1, Math.round(left * (1 - p / 140)));
-      prog.style.width = p + '%';
-      if (!progLeft.textContent.startsWith('Невозможно')) progLeft.textContent = `Осталось: ${pad(Math.floor(left / 60))}:${pad(left % 60)}`;
-      if (p < 99) setTimeout(step, 380 + Math.random() * 500);
-    };
-    step();
-  }).observe(prog);
 
   /* фото «проявляются» при скролле */
   const io = new IntersectionObserver(entries => entries.forEach(e => {
@@ -189,7 +167,7 @@
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-img]');
     if (t) { e.preventDefault(); openLb(`assets/img/${t.dataset.img}.webp`, t.textContent.trim()); return; }
-    const img = e.target.closest('.ph img, .strip img, .docscan img, .plan img, .prod__img img');
+    const img = e.target.closest('.ph img, .strip img, .docscan img, .plan img, .prod__img img, .cut img');
     if (img && !img.closest('.ph--poster a')) {
       const fig = img.closest('figure');
       const cap = fig && (fig.querySelector('figcaption') || fig.querySelector('.ts'));
@@ -200,15 +178,9 @@
   addEventListener('keydown', e => { if (e.key === 'Escape' && !lb.hidden) closeLb(); });
 
   /* видео играет, только пока видно; липкие билеты — после шапки и не на допуске */
-  const sticky = $('#sticky');
-  let vcrVisible = true, admVisible = false;
-  const syncSticky = () => sticky.classList.toggle('show', !vcrVisible && !admVisible);
   new IntersectionObserver(([e]) => {
-    vcrVisible = e.isIntersecting;
-    if (vcrVisible) video.play().catch(() => {}); else video.pause();
-    syncSticky();
+    if (e.isIntersecting) video.play().catch(() => {}); else video.pause();
   }, { threshold: 0.1 }).observe($('.vcr'));
-  new IntersectionObserver(([e]) => { admVisible = e.isIntersecting; syncSticky(); }, { threshold: 0.1 }).observe($('#access'));
 
   /* фонарь: один луч на все тёмные фото */
   const visible = new Set();
@@ -251,6 +223,7 @@
   const audio = $('#ampAudio'), plItems = $$('#ampList li');
   const ampTime = $('#ampTime'), ampTitle = $('#ampTitle'), ampState = $('#ampState'), ampSeek = $('#ampSeek'), ampCover = $('#ampCover');
   const vis = $('#ampVis'), vctx = vis.getContext('2d');
+  const vuL = $('#vuL'), vuR = $('#vuR'), spk = $$('.amp__spk'), vinyl = $('#ampVinyl');
   let cur = -1, actx = null, analyser = null, freq = null, visRaf = 0;
   const fmt = t => `${pad(Math.floor(t / 60))}:${pad(Math.floor(t % 60))}`;
   const loadTrack = i => {
@@ -284,11 +257,17 @@
         vctx.fillRect(i * (bw + 1), h - y - 1, bw, 1);
       }
     }
+    // винил, VU и колонки качаются от громкости
+    let lo = 0, hi = 0;
+    if (analyser) { for (let i = 1; i < 5; i++) lo += freq[i]; for (let i = 8; i < 20; i++) hi += freq[i]; lo /= 4 * 255; hi /= 12 * 255; }
+    else if (!audio.paused) { lo = Math.random() * .7; hi = Math.random() * .6; }
+    vuL.style.setProperty('--v', Math.round(lo * 100) + '%'); vuR.style.setProperty('--v', Math.round(hi * 100) + '%');
+    spk.forEach(el => { el.style.transform = `scale(${1 + lo * .08})`; });
     if (!audio.paused) visRaf = requestAnimationFrame(drawVis); else visRaf = 0;
   };
   const silenceOthers = () => {
     if (!video.muted) setSound(false);
-    if (tvVideo && !tvVideo.muted) setTvSound(false);
+    stopTiles();
   };
   const ampPlay = () => {
     if (cur < 0) loadTrack(0);
@@ -315,66 +294,51 @@
     ampTime.textContent = fmt(audio.currentTime);
     if (audio.duration) ampSeek.value = Math.round(audio.currentTime / audio.duration * 1000);
   });
-  audio.addEventListener('play', () => { ampState.textContent = 'play'; if (!visRaf) visRaf = requestAnimationFrame(drawVis); });
-  audio.addEventListener('pause', () => { if (audio.currentTime) ampState.textContent = 'pause'; });
+  audio.addEventListener('play', () => { ampState.textContent = 'play'; vinyl.classList.add('spin'); if (!visRaf) visRaf = requestAnimationFrame(drawVis); });
+  audio.addEventListener('pause', () => { vinyl.classList.remove('spin'); if (audio.currentTime) ampState.textContent = 'pause'; });
   audio.addEventListener('ended', () => { loadTrack(cur + 1); ampPlay(); });
   drawVis();
 
-  /* ---------- телевизор: 5 каналов ---------- */
-  const channels = [
-    { src: 'assets/video/tv-fakov.mp4', poster: 'assets/img/tv/tv-fakov.webp', name: 'Fakov — клип' },
-    { src: 'assets/video/tv-fbs.mp4', poster: 'assets/img/tv/tv-fbs.webp', name: 'FBS — клип' },
-    { src: 'assets/video/tv-platov.mp4', poster: 'assets/img/tv/tv-platov.webp', name: 'platov — TWO BAGZ (sg080) · анимация d3n' },
-    { src: 'assets/video/tv-druma.mp4', poster: 'assets/img/tv/tv-druma.webp', name: 'D R U M A' },
-    { src: 'assets/video/whitetrash.mp4', poster: 'assets/img/tv/whitetrash.webp', name: 'White Trash — 07 November', fit: 'contain' }
-  ];
-  const crt = $('#tv'), tvVideo = $('#tvVideo'), tvSub = $('#tvSub'), tvCh = $('#tvCh'), tvSnd = $('#tvSnd');
-  const tvNoise = $('#tvNoise'), nctx = tvNoise.getContext('2d');
-  const nimg = nctx.createImageData(tvNoise.width, tvNoise.height);
-  let noiseRaf = 0, tvOn = false;
-  const drawNoise = () => {
-    const d = nimg.data;
+  /* ---------- видео-плитки: шум, тап — сразу со звуком ---------- */
+  const tiles = $$('.vt');
+  const noiseFrame = cv => {
+    const c = cv.getContext('2d'), im = c.createImageData(cv.width, cv.height), d = im.data;
     for (let i = 0; i < d.length; i += 4) { const v = Math.random() * 255 | 0; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255; }
-    nctx.putImageData(nimg, 0, 0);
-    noiseRaf = crt.classList.contains('static') ? requestAnimationFrame(drawNoise) : 0;
+    c.putImageData(im, 0, 0);
   };
-  const staticBurst = ms => {
-    crt.classList.add('static');
-    if (!noiseRaf) noiseRaf = requestAnimationFrame(drawNoise);
-    setTimeout(() => crt.classList.remove('static'), reduce ? 0 : ms);
+  const shownTiles = new Set();
+  let noiseLoop = 0;
+  const runNoise = () => {
+    noiseLoop = 0;
+    let any = false;
+    shownTiles.forEach(t => { if (!t.classList.contains('on') || t.classList.contains('tuning')) { noiseFrame(t.querySelector('.vt__noise')); any = true; } });
+    if (any && !reduce) noiseLoop = setTimeout(() => requestAnimationFrame(runNoise), 70);
   };
-  function setTvSound(on) {
-    tvVideo.muted = !on;
-    tvSnd.setAttribute('aria-pressed', on);
-    if (on) { if (!audio.paused) audio.pause(); if (!video.muted) setSound(false); }
+  const tileIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const v = e.target.querySelector('video');
+      if (e.isIntersecting) shownTiles.add(e.target); else { shownTiles.delete(e.target); if (!v.paused) v.pause(); }
+    });
+    if (!noiseLoop) runNoise();
+  });
+  tiles.forEach(t => { tileIO.observe(t); noiseFrame(t.querySelector('.vt__noise')); });
+  function stopTiles(except) {
+    tiles.forEach(t => { if (t === except) return; const v = t.querySelector('video'); v.pause(); t.classList.remove('on'); t.querySelector('.vt__btn').textContent = '▶'; });
   }
-  tvVideo.muted = true;
-  const tune = i => {
-    const ch = channels[i];
-    staticBurst(380);
-    tvVideo.src = ch.src; tvVideo.poster = ch.poster; tvVideo.style.objectFit = ch.fit || 'cover';
-    tvVideo.loop = true;
-    tvVideo.play().catch(() => {});
-    tvCh.textContent = `CH ${pad(i + 1)}`;
-    tvSub.textContent = ch.name;
-    $$('.crt__btn[data-ch]').forEach(b => b.classList.toggle('on', +b.dataset.ch === i));
-    crt.classList.add('live'); tvOn = true;
-  };
-  document.addEventListener('click', e => {
-    const b = e.target.closest('[data-ch]');
-    if (b) tune(+b.dataset.ch);
+  tiles.forEach(t => {
+    const v = t.querySelector('video'), btn = t.querySelector('.vt__btn');
+    btn.addEventListener('click', () => {
+      if (t.classList.contains('on') && !v.paused) { v.pause(); t.classList.remove('on'); btn.textContent = '▶'; runNoise(); return; }
+      stopTiles(t);
+      if (!audio.paused) audio.pause();
+      if (!video.muted) setSound(false);
+      t.classList.add('on', 'tuning'); btn.textContent = '';
+      runNoise();
+      v.muted = false;
+      v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
+      setTimeout(() => t.classList.remove('tuning'), reduce ? 0 : 450);
+    });
   });
-  tvSnd.addEventListener('click', () => setTvSound(tvVideo.muted));
-  $('#tvPwr').addEventListener('click', () => {
-    tvVideo.pause(); tvVideo.removeAttribute('src'); tvVideo.load();
-    crt.classList.remove('live'); tvOn = false; tvSub.textContent = 'Нажми на канал.';
-    $$('.crt__btn[data-ch]').forEach(b => b.classList.remove('on'));
-    staticBurst(250);
-  });
-  new IntersectionObserver(([e]) => {
-    if (!tvOn) return;
-    if (e.isIntersecting) tvVideo.play().catch(() => {}); else tvVideo.pause();
-  }, { threshold: .2 }).observe(crt);
 
   /* ---------- мини-игра VOLUME01.EXE ---------- */
   const gc = $('#gCanvas'), g = gc.getContext('2d'), gStart = $('#gStart');
@@ -466,6 +430,15 @@
     if (!gRaf) gRaf = requestAnimationFrame(step);
   };
   gStart.addEventListener('click', startGame);
+  const gameWin = $('#game');
+  document.addEventListener('click', e => {
+    if (!e.target.closest('[data-game]')) return;
+    e.preventDefault(); gameWin.hidden = false; gVisible = true;
+    if (st && !st.over) { st.last = performance.now(); if (!gRaf) gRaf = requestAnimationFrame(step); }
+  });
+  const closeGame = () => { gameWin.hidden = true; gVisible = false; };
+  $('#gClose').addEventListener('click', closeGame);
+  gameWin.addEventListener('click', e => { if (e.target === gameWin) closeGame(); });
   const dirs = { ArrowUp: 'up', KeyW: 'up', ArrowDown: 'down', KeyS: 'down', ArrowLeft: 'left', KeyA: 'left', ArrowRight: 'right', KeyD: 'right' };
   addEventListener('keydown', e => { const d = dirs[e.code]; if (d && st && !st.over && gVisible) { keys[d] = true; e.preventDefault(); } });
   addEventListener('keyup', e => { const d = dirs[e.code]; if (d) keys[d] = false; });
@@ -474,9 +447,30 @@
     b.addEventListener('pointerdown', e => { e.preventDefault(); keys[d] = true; });
     ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => b.addEventListener(ev, () => { keys[d] = false; }));
   });
-  new IntersectionObserver(([e]) => {
-    gVisible = e.isIntersecting;
-    if (gVisible && st && !st.over) { st.last = performance.now(); if (!gRaf) gRaf = requestAnimationFrame(step); }
-  }).observe(gc);
   st = newGame(); render(0); overlay('VOLUME01.EXE', 'найди 6 жилетов в темноте'); st = null;
+
+  /* ---------- ayme.mp3: пикселизация и 8-битный эквалайзер ---------- */
+  const aCv = $('#aymeCv'), aCtx = aCv.getContext('2d'), aEq = $('#aymeEq'), eCtx = aEq.getContext('2d');
+  const aImg = new Image();
+  let aOn = false, aRaf = 0, aT0 = 0;
+  const drawAyme = t => {
+    aRaf = 0;
+    if (!aOn || !aImg.complete) return;
+    const k = reduce ? 6 : 3 + Math.round((Math.sin(t / 900) + 1) * 7);
+    const w = Math.max(8, aCv.width / k | 0), h = Math.max(4, aCv.height / k | 0);
+    aCtx.imageSmoothingEnabled = false;
+    aCtx.drawImage(aImg, 0, 0, w, h);
+    aCtx.drawImage(aCv, 0, 0, w, h, 0, 0, aCv.width, aCv.height);
+    eCtx.fillStyle = '#000'; eCtx.fillRect(0, 0, aEq.width, aEq.height);
+    for (let i = 0; i < 16; i++) {
+      const v = Math.abs(Math.sin(t / 180 + i * .7) * Math.cos(t / 330 + i)) * aEq.height | 0;
+      for (let y = 0; y < v; y += 3) { eCtx.fillStyle = y > 16 ? '#f33' : y > 9 ? '#ff3' : '#3f3'; eCtx.fillRect(i * 4, aEq.height - y - 2, 3, 2); }
+    }
+    if (!reduce) aRaf = setTimeout(() => requestAnimationFrame(drawAyme), 90);
+  };
+  new IntersectionObserver(([e]) => {
+    aOn = e.isIntersecting;
+    if (aOn && !aImg.src) { aImg.onload = () => requestAnimationFrame(drawAyme); aImg.src = 'assets/img/ayme-live.webp'; }
+    else if (aOn && !aRaf) requestAnimationFrame(drawAyme);
+  }).observe(aCv);
 })();
