@@ -53,6 +53,7 @@
       <li><a href="#check"><span class="moji" data-moji aria-label="Чек-лист вскрытия">Р§РµРє-Р»РёСЃС‚ РІСЃРєСЂС‹С‚РёСЏ</span></a></li>
       <li><a href="#vests"><span class="moji" data-moji aria-label="Жилеты">Р–РёР»РµС‚С‹</span><br><small><span class="moji" data-moji aria-label="светятся без источника">СЃРІРµС‚СЏС‚СЃСЏ Р±РµР· РёСЃС‚РѕС‡РЅРёРєР°</span></small></a></li>
       <li><a href="#misc">Прочие материалы</a></li>
+      <li><a href="#shop">Маркет <span class="new">NEW!</span></a></li>
       <li><a href="#lineup">Line-up</a></li>
       <li><a href="#access">Допуск 07.11</a></li>
       <li><a href="https://moscow.qtickets.events/264019-volume01-matveykin-x-wiluji" target="_blank" rel="noopener">Билеты</a></li>
@@ -60,6 +61,7 @@
     </ul>
     <div class="side__meta">
       <p>до вскрытия:<br><b id="cd">07.11 · 18:00</b></p>
+      <p class="tboard" aria-label="Время: 7:11, 19:11, 18:00, 23:00, 4:00, 01, 11"><span>07:11</span><span>19:11</span><span>18:00</span><span>23:00</span><span>04:00</span><span>01</span><span>11</span></p>
       <p>посетитель №<br><b class="counter" id="counter">000711</b></p>
     </div>
   </details>
@@ -80,8 +82,8 @@
       <div class="vcr__hud" aria-hidden="true">
         <span class="vcr__tl">PLAY ▶</span>
         <span class="vcr__tr" id="tc">00:00:00</span>
-        <span class="vcr__bl">SP</span>
-        <span class="vcr__br">08.11.2004</span>
+        <span class="vcr__bl">SP·01</span>
+        <span class="vcr__br"><span id="vcrDate">07.11.26</span> <span id="vcrTime">19:11:00</span></span>
       </div>
       <button class="vcr__snd" id="sound" aria-pressed="false">звук: <b>выкл</b></button>
     </div>
@@ -94,6 +96,15 @@
         <a class="bevel" href="https://moscow.qtickets.events/264019-volume01-matveykin-x-wiluji" target="_blank" rel="noopener">[ БИЛЕТЫ ]</a>
         <a class="bevel" href="https://t.me/QticketsBuyBot/buy?startapp=264019" target="_blank" rel="noopener">[ БИЛЕТЫ В ТГ ]</a>
       </p>
+      <div class="stickers" aria-label="07.11: вход 18:00, 18+ с 23:00, выход 4:00">
+        <span class="stk stk--w"><small>₽</small>7.11</span>
+        <span class="stk stk--o"><small>SPECIAL</small>19:11</span>
+        <span class="stk stk--c"><small>022492</small>18:00</span>
+        <span class="stk stk--g">23:00</span>
+        <span class="stk stk--b"><small>LIST 01 · OUR</small>4:00</span>
+        <span class="stk stk--p"><small>REDUCED TO</small>01</span>
+        <span class="stk stk--r"><small>SALE PRICE</small>11</span>
+      </div>
     </div>
 
     <marquee class="ticker" scrollamount="3">+++ объект закрыт с 08.11.2004 +++ бригада №6 не выходит на связь с 26.10 +++ не выключайте звук +++ лиц на плёнке: 28 +++ 07.11 объект открывают повторно +++ смена 1: 18:00 · смена 2: 23:00 — 04:00 +++</marquee>
@@ -114,6 +125,7 @@
           <tr><td><a href="#misc">prochee/</a></td><td>27-Oct-2026 03:59</td><td>-</td></tr>
           <tr><td><span class="rd" tabindex="0" data-alt="storozh_gorelov.jpg">████████████████</span></td><td>08-Nov-2004 03:59</td><td>0K</td></tr>
           <tr><td><a href="#news">news.php?id=0711</a></td><td>28-Oct-2026 12:00</td><td>4K</td></tr>
+          <tr><td><a href="#shop">shop/</a> <span class="new">NEW!</span></td><td>07-Nov-2026 18:00</td><td>-</td></tr>
           <tr><td><a href="#lineup">lineup.txt</a></td><td>27-Oct-2026 03:59</td><td>1K</td></tr>
           <tr><td><a href="#access">dopusk_0711.htm</a></td><td>27-Oct-2026 03:59</td><td>2K</td></tr>
         </tbody>
@@ -159,16 +171,21 @@
 
     <!-- НОВОСТИ -->
     <section class="news" id="news">
-      <div class="news__bar"><b>Н О В О С Т И</b><a href="#news">архив новостей »</a></div>
-      <p class="news__date">28.10.2026 · 12:00 <span class="new">NEW!</span></p>
-      <h3 class="news__h"><a href="#news"><span class="stretch">VOLUME01</span> шоу, маркет, живой звук и <span class="moji" data-moji aria-label="что-то очень крутое">С‡С‚Рѕ-С‚Рѕ РѕС‡РµРЅСЊ РєСЂСѓС‚РѕРµ</span>..</a></h3>
+      <div class="news__bar"><b>НОВОСТИ</b><a href="#news">архив новостей »</a></div>
+      <p class="news__date">28.10.2026 · 19:11 <span class="new">NEW!</span></p>
+      <h3 class="news__h"><a href="#news"><span class="stretch">VOLUME01</span> — ивент, объединяющий артистов, диджеев и продюсеров под крышей бывшего завода «Кристалл» в fābula HQ</a></h3>
       <p class="news__lead">Мы приготовили для вас необычное шоу, которое соберёт в себя различные объединения, маркет зону, живой звук и <span class="moji" data-moji aria-label="что-то очень крутое">С‡С‚Рѕ-С‚Рѕ РѕС‡РµРЅСЊ РєСЂСѓС‚РѕРµ</span>..</p>
+      <p class="news__aside">Для тех, кто не в теме, немного расскажем про лайнап.</p>
       <p class="news__big">Летом этого года <a href="https://www.instagram.com/soylo._k" target="_blank" rel="noopener">Sir Soylok</a>, <a href="https://t.me/mad_golem" target="_blank" rel="noopener">Fakov</a>, <a href="https://t.me/fbsfbsfbsfbsfbs" target="_blank" rel="noopener">FBS</a>, <a href="https://t.me/jessieluckyo" target="_blank" rel="noopener">Jessie Luck</a>, <a href="https://t.me/claytcarter1" target="_blank" rel="noopener">Clayt Carter</a> и <a href="https://t.me/bossfight_dubstepceo" target="_blank" rel="noopener">BOSSFIGHT DUBSTEP CEO</a> стали моделями для <span class="squeeze"><a href="https://t.me/gosharubchinskiy" target="_blank" rel="noopener">Гоши Рубчинского</a></span></p>
       <ul class="news__list">
         <li>Семен <a href="https://www.instagram.com/soylo._k" target="_blank" rel="noopener">Sir Soylok</a> успел поработать с такими большими фигурами индустрии как Glukoza, Boulevard Depo, Slava Marlow и Mayot</li>
-        <li><a href="https://t.me/xxchaikaxx" target="_blank" rel="noopener">CHAIKA</a>, <a href="https://t.me/wtfshryne" target="_blank" rel="noopener">wtfshryne</a> и <a href="https://www.instagram.com/arschy" target="_blank" rel="noopener">Arschy</a> отметились работами с Глюкозой, 9mice, ANIKV и <span class="moji" data-moji aria-label="другими">РґСЂСѓРіРёРјРё</span></li>
-        <li><a href="https://t.me/jessieluckyo" target="_blank" rel="noopener">Jessie Luck</a>, <a href="https://t.me/claytcarter1" target="_blank" rel="noopener">Clayt Carter</a>, <a href="https://t.me/bossfight_dubstepceo" target="_blank" rel="noopener">BOSSFIGHT DUBSTEP CEO</a> — 3 персонажа с уникальнейшим, совершенно разным звуком, имеющие в дискографии фиты с FORTUNA812</li>
+        <li><a href="https://www.instagram.com/arschy" target="_blank" rel="noopener">Arschy</a>, <a href="https://t.me/xxchaikaxx" target="_blank" rel="noopener">CHAIKA</a> и <a href="https://t.me/wtfshryne" target="_blank" rel="noopener">wtfshryne</a> отметились работами с 9mice, Глюкозой, ANIKV и <span class="moji" data-moji aria-label="другими">РґСЂСѓРіРёРјРё</span></li>
+        <li><a href="https://t.me/jessieluckyo" target="_blank" rel="noopener">Jessie Luck</a>, <a href="https://t.me/claytcarter1" target="_blank" rel="noopener">Clayt Carter</a>, <a href="https://t.me/bossfight_dubstepceo" target="_blank" rel="noopener">BOSSFIGHT DUBSTEP CEO</a> — 3 персонажа с уникальнейшим, совершенно разным звуком, имеющие в дискографии фиты с FORTUNA812, onda andar и другими</li>
         <li><a href="https://t.me/platovoplomo3k55" target="_blank" rel="noopener">platov</a> (platovoplomo) — основатель <a href="https://t.me/cryghanistan1" target="_blank" rel="noopener">crysquad</a>, участник <a href="https://t.me/doomrushaz" target="_blank" rel="noopener">DOOM RUSHAZ</a> со своим стилем и грязным звуком</li>
+        <li><a href="https://t.me/mad_golem" target="_blank" rel="noopener">Fakov</a> (твой паук) — основатель torgovi, имеет уникальный образ и вкус. Тимофей умело сочетает московский шик с юмором, советуем глянуть его клипы</li>
+        <li><a href="https://t.me/bossfight_dubstepceo" target="_blank" rel="noopener">BOSSFIGHT DUBSTEP CEO</a> раньше состоял в объединении 2016 вместе с onda andar, также за плечами имеет совместные работы с FORTUNA 812</li>
+        <li><a href="https://t.me/escortcyka" target="_blank" rel="noopener">PLGTHG</a> вылез из подвалов и заброшек на столичные концерты, он постоянно выступает в разных клубах</li>
+        <li><a href="https://t.me/sincere_3" target="_blank" rel="noopener">dj sincere</a> удачно залетел в тикток со своими ремиксами, он умеет выдать неожиданные мешапы и жёсткий звук</li>
       </ul>
       <p class="news__meta"><a href="#news">Комментарии (0)</a> | <a href="#" data-sys="print">Версия для печати</a> | <a href="#" data-sys="mail">Отправить другу</a> | источник: <span class="rd" tabindex="0" data-alt="архив VOLUME01">██████ ████████</span></p>
     </section>
@@ -188,6 +205,15 @@
         <figure><img src="assets/img/tape06.webp" width="640" height="360" alt="Кадр с кассеты: лицо рабочего" loading="lazy"><span class="ts">00:00:07</span></figure>
         <figure><img src="assets/img/tape07.webp" width="640" height="360" alt="Кадр с кассеты: темнота" loading="lazy"><span class="ts">03:59:59</span></figure>
       </div>
+      <figure class="crt">
+        <div class="crt__screen">
+          <img src="assets/img/tape04.webp" width="640" height="360" alt="Кадр с кассеты на экране телевизора: бригада идёт в темноте" loading="lazy">
+          <span class="crt__logo" aria-hidden="true">VL01<i></i></span>
+          <figcaption class="crt__sub">Не выключай звук.</figcaption>
+        </div>
+        <div class="crt__panel" aria-hidden="true"><i></i><span>-☼+ &nbsp;-◐+ &nbsp;i &nbsp;▽ C △ &nbsp;TV·AV</span><b></b><b></b></div>
+      </figure>
+
       <div class="win win--copy" role="group" aria-label="Копирование файла">
         <div class="win__bar"><span>Копирование...</span><i aria-hidden="true">×</i></div>
         <div class="win__body">
@@ -339,6 +365,21 @@
       </div>
     </section>
 
+    <!-- МАРКЕТ -->
+    <section class="shop" id="shop">
+      <div class="shop__head"><b>ИНТЕРНЕТ-МАГАЗИН «VOLUME01»</b><a href="#" data-sys="cart">Корзина (0)</a></div>
+      <p class="shop__note">Работаем только 07.11 с 18:00 до 04:00. Оплата на объекте. Доставка не осуществляется.</p>
+      <table class="shop__t">
+        <tr><td class="shop__n"><a href="https://t.me/kobait" target="_blank" rel="noopener">kobai</a></td><td>маркет</td><td><button class="win__btn" data-sys="cart">В корзину</button></td></tr>
+        <tr><td class="shop__n"><a href="https://t.me/Hocus_clo" target="_blank" rel="noopener">hocus</a></td><td>одежда</td><td><button class="win__btn" data-sys="cart">В корзину</button></td></tr>
+        <tr><td class="shop__n">merch</td><td>VOLUME01</td><td><button class="win__btn" data-sys="cart">В корзину</button></td></tr>
+        <tr><td class="shop__n">barber</td><td>на объекте</td><td><button class="win__btn" data-sys="cart">Записаться</button></td></tr>
+        <tr><td class="shop__n">&amp; more…</td><td><span class="rd" tabindex="0" data-alt="узнаете на месте">████ ██ █████</span></td><td></td></tr>
+      </table>
+    </section>
+
+    <a class="b468" href="#shop"><span class="b468__a">МАРКЕТ НА ОБЪЕКТЕ!!!</span><span class="b468__b">kobai · hocus · merch · barber</span><span class="b468__c">ЖМИ&nbsp;СЮДА »</span></a>
+
     <p class="php"><br><b>Fatal error</b>: Allowed memory size of 8388608 bytes exhausted (tried to allocate 3590711 bytes) in <b>/home/volume01/public_html/lineup.php</b> on line <b>28</b><br></p>
 
     <!-- 8. ФИГУРАНТЫ -->
@@ -410,7 +451,14 @@
       <span class="b88 b88--d"><b>● REC</b><i>cam 02</i></span>
       <span class="b88 b88--e"><b>FLASH 5</b><i>не найден</i></span>
       <span class="b88 b88--f"><b>TOP-100</b><i>№ 0711</i></span>
+      <span class="b88 b88--g"><b>SVET.DLL</b><i>powered by</i></span>
+      <span class="b88 b88--h"><b>ANYTHING</b><i>but daylight</i></span>
+      <span class="b88 b88--i"><b>BAD HTML</b><i>markup ✗</i></span>
+      <span class="b88 b88--j"><b>04:00</b><i>planned obsolescence</i></span>
+      <span class="b88 b88--k"><b>СВЕТ IS DEAD.</b><i>good riddance.</i></span>
+      <span class="b88 b88--l"><b>fābula HQ</b><i>accepted here</i></span>
     </div>
+    <p class="notice" aria-hidden="true"><b>NOTICE:</b><span>у вебмастера с собой меньше 300 ₽ наличными</span></p>
     <p class="sysfoot">Страница сгенерирована за 0.0359 сек. · Last-Modified: Mon, 08 Nov 2004 03:59:00 GMT<br>Ваш браузер не поддерживает фреймы.</p>
     <p class="wide wide--foot">V O L U M E 0 1 &nbsp;(c) 2 0 0 4 / 2 0 2 6<br>A l l &nbsp;R i g h t s &nbsp;R e s e r v e d .</p>
     <p class="credit">S i t e &nbsp;d e s i g n &nbsp;b y <a class="torch" href="https://t.me/yanbasee" target="_blank" rel="noopener">@yanbasee</a></p>
@@ -423,6 +471,11 @@
 </footer>
 
 <a class="sticky" id="sticky" href="https://moscow.qtickets.events/264019-volume01-matveykin-x-wiluji" target="_blank" rel="noopener"><span>[ БИЛЕТЫ ]</span><span>07.11 · fābula HQ</span></a>
+
+<div class="adpop" id="adpop" hidden role="dialog" aria-label="Реклама">
+  <div class="win__bar"><span id="adTitle">Реклама</span><button class="adpop__x" id="adX" aria-label="Закрыть рекламу">×</button></div>
+  <a class="adpop__body" id="adBody" href="#shop"></a>
+</div>
 
 <div class="sysmodal" id="sysModal" hidden>
   <div class="win" role="alertdialog" aria-labelledby="sysTitle" aria-describedby="sysText">

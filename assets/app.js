@@ -56,18 +56,22 @@
   };
   $('#enter').addEventListener('click', enter);
 
-  /* обратный отсчёт: 07.11 18:00 МСК */
+  /* обратный отсчёт: 07.11 18:00 МСК, с сотыми — побольше цифр */
   const start = Date.UTC(2026, 10, 7, 15), end = Date.UTC(2026, 10, 8, 1);
-  const cd = $('#cd');
+  const cd = $('#cd'), vcrTime = $('#vcrTime');
   const count = () => {
     const now = Date.now();
-    if (now >= end) { cd.textContent = 'объект закрыт'; return; }
-    if (now >= start) { cd.textContent = 'объект открыт'; return; }
-    let s = Math.floor((start - now) / 1000);
-    const d = Math.floor(s / 86400); s %= 86400;
-    cd.textContent = `${d}д ${pad(Math.floor(s / 3600))}:${pad(Math.floor(s % 3600 / 60))}:${pad(s % 60)}`;
+    if (now >= end) cd.textContent = 'объект закрыт';
+    else if (now >= start) cd.textContent = 'объект открыт';
+    else {
+      const ms = start - now; let s = Math.floor(ms / 1000);
+      const d = Math.floor(s / 86400); s %= 86400;
+      cd.textContent = `${d}д ${pad(Math.floor(s / 3600))}:${pad(Math.floor(s % 3600 / 60))}:${pad(s % 60)}.${pad(Math.floor(ms % 1000 / 10))}`;
+    }
+    const t = new Date();
+    vcrTime.textContent = `${pad(t.getHours())}:${pad(t.getMinutes())}:${pad(t.getSeconds())}`;
   };
-  count(); setInterval(count, 1000);
+  count(); setInterval(count, reduce ? 1000 : 53);
 
   /* счётчик посетителей */
   $('#counter').textContent = String(711 + Math.floor((Date.now() - Date.UTC(2026, 9, 27)) / 97000)).padStart(6, '0');
@@ -108,7 +112,8 @@
     dll: () => say('svet.dll', 'Не удаётся открыть файл. Источник света не найден.'),
     cancel: () => { $('#progLeft').textContent = 'Невозможно отменить: файл используется другим процессом (svet.dll).'; },
     print: () => say('Печать', 'Принтер не найден. Подключите принтер к LPT1 и повторите попытку.'),
-    mail: () => say('Outlook Express', 'Не удалось отправить сообщение: сервер SMTP volume01.narod.ru не отвечает.')
+    mail: () => say('Outlook Express', 'Не удалось отправить сообщение: сервер SMTP volume01.narod.ru не отвечает.'),
+    cart: () => say('Корзина', 'Корзина недоступна. Покупка только на объекте 07.11 с 18:00 до 04:00.')
   };
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-sys]');
@@ -116,6 +121,33 @@
     e.preventDefault();
     sys[t.dataset.sys] && sys[t.dataset.sys]();
   });
+
+  /* навязчивая реклама маркета: появляется, пока человек сидит на сайте */
+  const ads = [
+    { t: 'kobai.exe — Реклама', b: 'МАРКЕТ НА ОБЪЕКТЕ!!!', s: 'kobai · hocus · merch · barber<br>07.11 · 18:00 — 04:00 · fābula HQ', c: 'ЖМИ СЮДА »' },
+    { t: 'hocus.exe — Реклама', b: 'HOCUS НА ОБЪЕКТЕ', s: 'одежда · маркет VOLUME01<br>только 07.11', c: 'СМОТРЕТЬ »' },
+    { t: 'barber.exe — Реклама', b: 'БАРБЕР НА ОБЪЕКТЕ', s: 'стрижка прямо на ивенте<br>07.11 · fābula HQ', c: 'ПОДРОБНЕЕ »' }
+  ];
+  const adpop = $('#adpop'), adX = $('#adX');
+  let adN = 0, dodged = false;
+  try { adN = +sessionStorage.getItem('v01-ads') || 0; } catch (e) {}
+  const showAd = () => {
+    if (adN >= ads.length || !lb.hidden || !modal.hidden || !gate.classList.contains('off')) return;
+    const a = ads[adN++];
+    try { sessionStorage.setItem('v01-ads', adN); } catch (e) {}
+    $('#adTitle').textContent = a.t;
+    $('#adBody').innerHTML = `<b>${a.b}</b><span>${a.s}</span><i>${a.c}</i>`;
+    dodged = false; adX.style.transform = '';
+    adpop.hidden = false;
+  };
+  const hideAd = () => { adpop.hidden = true; };
+  adX.addEventListener('click', () => {
+    // первый раз крестик «убегает», как на старых баннерах
+    if (!dodged && !reduce) { dodged = true; adX.style.transform = `translate(${-40 - Math.random() * 60}px, ${10 + Math.random() * 30}px)`; return; }
+    hideAd();
+  });
+  $('#adBody').addEventListener('click', hideAd);
+  [25000, 75000, 150000].forEach(t => setTimeout(showAd, t));
 
   /* копирование кассеты: доходит до 99% и встаёт */
   const prog = $('#prog'), progLeft = $('#progLeft');
