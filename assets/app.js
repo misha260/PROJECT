@@ -101,23 +101,14 @@
   $('#sysOk').addEventListener('click', hideModal);
   modal.addEventListener('click', e => { if (e.target === modal) hideModal(); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) hideModal(); });
-  const errWin = $('#errWin');
-  let crashes = 1;
   const sys = {
     fav: () => say('Избранное', 'Не удалось добавить страницу в избранное. Объект не существует с 08.11.2004.'),
     home: () => say('Microsoft Internet Explorer', 'Стартовая страница не может быть изменена: объект закрыт.'),
     koi: () => say(toMoji('Кодировка'), toMoji('Кодировка не поддерживается. Выберите WIN.')),
     dll: () => say('svet.dll', 'Не удаётся открыть файл. Источник света не найден.'),
     cancel: () => { $('#progLeft').textContent = 'Невозможно отменить: файл используется другим процессом (svet.dll).'; },
-    details: () => { const d = errWin.querySelector('.win__det'); d.hidden = !d.hidden; },
-    close: () => {
-      errWin.classList.add('gone');
-      setTimeout(() => {
-        crashes++;
-        errWin.querySelector('.win__bar span').textContent = `ZHILETY (${crashes})`;
-        errWin.classList.remove('gone');
-      }, 1200);
-    }
+    print: () => say('Печать', 'Принтер не найден. Подключите принтер к LPT1 и повторите попытку.'),
+    mail: () => say('Outlook Express', 'Не удалось отправить сообщение: сервер SMTP volume01.narod.ru не отвечает.')
   };
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-sys]');
