@@ -761,6 +761,12 @@ p{margin:0 0 1em}
 .playlink span{display:block;margin-top:4px}
 .gamewin,.gamewin *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 .game__pad button,.game__screen{touch-action:none}
+/* Index of: красное выделение как у выделенного текста */
+.hl-r{background:#a3151a;color:#fff;padding:1px 2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hl-r a,.hl-r a:visited{color:#fff!important}
+.hl-r .new{color:#ffd400}
+.hl-r .rd{background:#fff}
+.idx th .hl-r{background:#6e0d11}
 /* разбросанные ценники */
 .fstk{position:relative;height:0;z-index:6;pointer-events:none}
 .fstk .stk{position:absolute;transform:rotate(var(--r,-5deg));max-width:170px;font-size:13px;box-shadow:0 6px 12px rgba(0,0,0,.55)}
