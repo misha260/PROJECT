@@ -516,6 +516,5 @@
   door.addEventListener('click', () => {
     const inn = door.nextElementSibling, open = inn.hidden;
     inn.hidden = !open; door.setAttribute('aria-expanded', open);
-    door.querySelector('small').textContent = open ? 'зачем открыли?' : 'не открывать';
   });
 })();
