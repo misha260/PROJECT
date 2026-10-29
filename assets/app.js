@@ -105,6 +105,9 @@
   $('#sysOk').addEventListener('click', hideModal);
   modal.addEventListener('click', e => { if (e.target === modal) hideModal(); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) hideModal(); });
+  const fbsWin = $('#fbsWin');
+  $('#fbsX').addEventListener('click', () => { fbsWin.hidden = true; });
+  fbsWin.addEventListener('click', e => { if (e.target === fbsWin) fbsWin.hidden = true; });
   const sys = {
     fav: () => say('Избранное', 'Не удалось добавить страницу в избранное. Объект не существует с 08.11.2004.'),
     home: () => say('Microsoft Internet Explorer', 'Стартовая страница не может быть изменена: объект закрыт.'),
@@ -112,8 +115,9 @@
     dll: () => say('svet.dll', 'Не удаётся открыть файл. Источник света не найден.'),
     print: () => say('Печать', 'Принтер не найден. Подключите принтер к LPT1 и повторите попытку.'),
     mail: () => say('Outlook Express', 'Не удалось отправить сообщение: сервер SMTP volume01.narod.ru не отвечает.'),
+    fbs: () => { fbsWin.hidden = false; },
     comment: () => say('Комментарии', 'Комментарии к этой записи отключены владельцем журнала.'),
-    cart: () => say('Корзина', 'Корзина недоступна. Покупка только на объекте 07.11 с 18:00 до 04:00.')
+    cart: () => say('Корзина', 'Корзина недоступна. Покупка — по ссылкам продавцов.')
   };
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-sys]');
@@ -126,9 +130,9 @@
   const ads = [
     { t: 'matveykin_shop.exe — Реклама', img: 'shop-gentle-1', b: 'ХИТ! CD-БРЕЛОК', s: 'Jessie Luck — Gentle<br>заказ в ТГ @jonatanleandoer97', c: 'КУПИТЬ »', h: '#shop' },
     { t: 'ck.exe — Реклама', img: 'shop-ck-3', b: 'NEW!!! ck', s: 'FORTUNA 812 &amp; Clayt Carter<br>CD-брелок · Matveykin Shop', c: 'ХОЧУ »', h: '#shop' },
-    { t: 'whitetrash.exe — Реклама', img: 'whitetrash', b: 'WHITE TRASH', s: 'сэмплы капсулы<br>только 07.11 в Фабуле', c: 'ПОДРОБНЕЕ »', h: '#posts' },
-    { t: 'barber.exe — Реклама', b: 'СТРИЖКА НА ИВЕНТЕ', s: 'барбер на объекте 07.11<br>запись — услугой в билетах', c: 'ЗАПИСАТЬСЯ »', h: '#shop' },
-    { t: 'kobai.exe — Реклама', b: 'МАРКЕТ НА ОБЪЕКТЕ!!!', s: 'kobai · hocus · merch · barber<br>07.11 · 18:00 — 04:00 · fābula HQ', c: 'ЖМИ СЮДА »', h: '#shop' }
+    { t: 'whitetrash.exe — Реклама', img: 'whitetrash', b: 'WHITE TRASH', s: 'сэмплы капсулы<br>скоро · подробнее в посте', c: 'ПОДРОБНЕЕ »', h: '#posts' },
+    { t: 'barber.exe — Реклама', b: 'СТРИЖКА НА ИВЕНТЕ', s: 'барбер на ивенте 07.11<br>запись — услугой в билетах', c: 'ЗАПИСАТЬСЯ »', h: '#shop' },
+    { t: 'matveykin_shop.exe — Реклама', b: 'MATVEYKIN SHOP!!!', s: 'CD-брелоки · kobai · hocus<br>merch · barber', c: 'ЖМИ СЮДА »', h: '#shop' }
   ];
   const adpop = $('#adpop'), adX = $('#adX');
   let adN = 0;
@@ -168,7 +172,7 @@
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-img]');
     if (t) { e.preventDefault(); openLb(`assets/img/${t.dataset.img}.webp`, t.textContent.trim()); return; }
-    const img = e.target.closest('.ph img, .strip img, .docscan img, .plan img, .prod__img img, .cut img');
+    const img = e.target.closest('.ph img, .strip img, .docscan > img, .plan img, .prod__img img, .cut img:not(.cut__emo), .win--img img, .closet__in img:first-child, .gold__f img, .boss__grid img');
     if (img && !img.closest('.ph--poster a')) {
       const fig = img.closest('figure');
       const cap = fig && (fig.querySelector('figcaption') || fig.querySelector('.ts'));
@@ -231,7 +235,6 @@
     cur = (i + plItems.length) % plItems.length;
     const li = plItems[cur];
     audio.src = li.dataset.src;
-    ampCover.src = li.dataset.cover;
     ampTitle.textContent = `${cur + 1}. ${li.querySelector('span').textContent} (${li.querySelector('i').textContent}) *** `;
     plItems.forEach((x, k) => x.classList.toggle('on', k === cur));
   };
@@ -268,7 +271,7 @@
   };
   const silenceOthers = () => {
     if (!video.muted) setSound(false);
-    stopTiles();
+    stopTiles(); stopMini();
   };
   const ampPlay = () => {
     if (cur < 0) loadTrack(0);
@@ -330,7 +333,7 @@
     const v = t.querySelector('video'), btn = t.querySelector('.vt__btn');
     btn.addEventListener('click', () => {
       if (t.classList.contains('on') && !v.paused) { v.pause(); t.classList.remove('on'); btn.textContent = '▶'; runNoise(); return; }
-      stopTiles(t);
+      stopTiles(t); stopMini();
       if (!audio.paused) audio.pause();
       if (!video.muted) setSound(false);
       t.classList.add('on', 'tuning'); btn.textContent = '';
@@ -369,9 +372,11 @@
     g.fillRect(d.x - 5, d.y + arm + bob, 2, 3); g.fillRect(d.x + 3, d.y - arm - 2 + bob, 2, 3);
   };
   const drawVest = (v, t) => {
-    const glow = Math.sin(t / 200 + v.x) * .3 + .7;
-    g.fillStyle = `rgba(255,120,0,${glow})`; g.fillRect(v.x - 3, v.y - 3, 6, 7);
-    g.fillStyle = `rgba(255,255,255,${glow})`; g.fillRect(v.x - 3, v.y, 6, 1); g.fillRect(v.x - 2, v.y - 3, 1, 7); g.fillRect(v.x + 1, v.y - 3, 1, 7);
+    // газета: белый лист со строчками, слегка мерцает
+    const glow = Math.sin(t / 200 + v.x) * .2 + .8;
+    g.fillStyle = `rgba(230,226,214,${glow})`; g.fillRect(v.x - 4, v.y - 3, 8, 7);
+    g.fillStyle = `rgba(40,40,40,${glow})`; g.fillRect(v.x - 3, v.y - 2, 6, 1); g.fillRect(v.x - 3, v.y, 3, 1); g.fillRect(v.x - 3, v.y + 2, 6, 1); g.fillRect(v.x + 1, v.y, 2, 1);
+    g.fillStyle = `rgba(180,20,20,${glow})`; g.fillRect(v.x + 1, v.y - 2, 2, 1);
   };
   const render = t => {
     g.fillStyle = '#0d0d0d'; g.fillRect(0, 0, W, H);
@@ -394,11 +399,11 @@
     g.fillText(a, W / 2, 56); g.fillStyle = '#ddd'; g.font = '7px monospace'; g.fillText(b, W / 2, 68);
   };
   const gameOver = win => {
-    st.over = true; st.win = win;
+    st.over = true; st.win = win; gMusic.pause();
     const score = st.got;
     if (score > best) { best = score; gB.textContent = best; try { localStorage.setItem('v01-best', best); } catch (e) {} }
     render(performance.now());
-    overlay(win ? 'БРИГАДА №7 ПРИНЯТА' : 'СИГНАЛ ПОТЕРЯН', win ? '07.11 · 18:00 · fābula HQ' : `жилетов: ${score}/6`);
+    overlay(win ? 'ВСЕ ГАЗЕТЫ СОБРАНЫ' : 'СИГНАЛ ПОТЕРЯН', win ? '07.11 · 18:00 · fābula HQ' : `газет: ${score}/6`);
     gStart.textContent = '▶ ЕЩЁ РАЗ'; gStart.hidden = false;
   };
   const step = t => {
@@ -425,8 +430,11 @@
     render(t);
     gRaf = requestAnimationFrame(step);
   };
+  const gMusic = new Audio('assets/audio/game-711.mp3'); gMusic.loop = true; gMusic.preload = 'none'; gMusic.volume = .6;
   const startGame = () => {
     st = newGame(); gStart.hidden = true;
+    if (!audio.paused) audio.pause(); stopTiles(); stopMini(); if (!video.muted) setSound(false);
+    gMusic.currentTime = 0; gMusic.play().catch(() => {});
     st.last = performance.now();
     if (!gRaf) gRaf = requestAnimationFrame(step);
   };
@@ -437,7 +445,7 @@
     e.preventDefault(); gameWin.hidden = false; gVisible = true;
     if (st && !st.over) { st.last = performance.now(); if (!gRaf) gRaf = requestAnimationFrame(step); }
   });
-  const closeGame = () => { gameWin.hidden = true; gVisible = false; };
+  const closeGame = () => { gameWin.hidden = true; gVisible = false; gMusic.pause(); };
   $('#gClose').addEventListener('click', closeGame);
   gameWin.addEventListener('click', e => { if (e.target === gameWin) closeGame(); });
   const dirs = { ArrowUp: 'up', KeyW: 'up', ArrowDown: 'down', KeyS: 'down', ArrowLeft: 'left', KeyA: 'left', ArrowRight: 'right', KeyD: 'right' };
@@ -448,7 +456,7 @@
     b.addEventListener('pointerdown', e => { e.preventDefault(); keys[d] = true; });
     ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => b.addEventListener(ev, () => { keys[d] = false; }));
   });
-  st = newGame(); render(0); overlay('VOLUME01.EXE', 'найди 6 жилетов в темноте'); st = null;
+  st = newGame(); render(0); overlay('VOLUME01.EXE', 'найди 6 газет в темноте'); st = null;
 
   /* ---------- ayme.mp3: пикселизация и 8-битный эквалайзер ---------- */
   const aCv = $('#aymeCv'), aCtx = aCv.getContext('2d'), aEq = $('#aymeEq'), eCtx = aEq.getContext('2d');
@@ -474,4 +482,40 @@
     if (aOn && !aImg.src) { aImg.onload = () => requestAnimationFrame(drawAyme); aImg.src = 'assets/img/ayme-live.webp'; }
     else if (aOn && !aRaf) requestAnimationFrame(drawAyme);
   }).observe(aCv);
+
+  /* ---------- мини-плееры у постов ---------- */
+  const miniAudio = new Audio(); miniAudio.preload = 'none';
+  let miniBtn = null;
+  function stopMini() { miniAudio.pause(); if (miniBtn) { miniBtn.classList.remove('on'); miniBtn.querySelector('i').textContent = '▶'; } miniBtn = null; }
+  $$('.mini').forEach(b => b.addEventListener('click', () => {
+    if (miniBtn === b) { stopMini(); return; }
+    stopMini(); if (!audio.paused) audio.pause(); stopTiles(); if (!video.muted) setSound(false);
+    miniBtn = b; miniAudio.src = b.dataset.src; miniAudio.play().catch(() => {});
+    b.classList.add('on'); b.querySelector('i').textContent = '❚❚';
+  }));
+  miniAudio.addEventListener('ended', stopMini);
+
+  /* ---------- мелькающие обложки ---------- */
+  const flick = $('#flick');
+  if (flick) {
+    const fimg = flick.querySelector('img'), fcv = flick.querySelector('canvas'), srcs = fimg.dataset.srcs.split(',');
+    srcs.forEach(u => { const i = new Image(); i.src = u; });
+    let fi = 0;
+    const fnoise = () => { const c = fcv.getContext('2d'), im = c.createImageData(fcv.width, fcv.height), d = im.data;
+      for (let i = 0; i < d.length; i += 4) { const v = Math.random() * 255 | 0; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255; } c.putImageData(im, 0, 0); };
+    const swap = () => {
+      if (reduce) return;
+      flick.classList.add('glitch'); fnoise();
+      let n = 0; const t = setInterval(() => { fnoise(); fimg.src = srcs[Math.random() * srcs.length | 0]; if (++n > 4) { clearInterval(t); fi = (fi + 1) % srcs.length; fimg.src = srcs[fi]; flick.classList.remove('glitch'); } }, 70);
+    };
+    setInterval(swap, 2600);
+  }
+
+  /* ---------- кладовка ---------- */
+  const door = $('#closetDoor');
+  door.addEventListener('click', () => {
+    const inn = door.nextElementSibling, open = inn.hidden;
+    inn.hidden = !open; door.setAttribute('aria-expanded', open);
+    door.querySelector('small').textContent = open ? 'зачем открыли?' : 'не открывать';
+  });
 })();
