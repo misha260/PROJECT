@@ -420,7 +420,7 @@
     st.p.x = Math.max(4, Math.min(W - 4, st.p.x)); st.p.y = Math.max(8, Math.min(H - 6, st.p.y));
     st.dancers.forEach((d, i) => {
       const dx = st.p.x - d.x, dy = st.p.y - d.y, dist = Math.hypot(dx, dy) || 1;
-      const ds = (.012 + st.got * .003 + i * .002) * dt;
+      const ds = (.008 + st.got * .002 + i * .0015) * dt;
       d.x += dx / dist * ds + Math.sin(t / 300 + d.ph) * .15; d.y += dy / dist * ds + Math.cos(t / 260 + d.ph) * .15;
       if (dist < 5) gameOver(false);
     });
@@ -449,6 +449,7 @@
     e.preventDefault(); gameWin.hidden = false; gVisible = true;
     if (st && !st.over) { st.last = performance.now(); if (!gRaf) gRaf = requestAnimationFrame(step); }
   });
+  gameWin.addEventListener('contextmenu', e => e.preventDefault());
   const closeGame = () => { gameWin.hidden = true; gVisible = false; gMusic.pause(); };
   $('#gClose').addEventListener('click', closeGame);
   gameWin.addEventListener('click', e => { if (e.target === gameWin) closeGame(); });
