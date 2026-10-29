@@ -470,11 +470,18 @@
   const drawAyme = t => {
     aRaf = 0;
     if (!aOn || !aImg.complete) return;
-    const k = reduce ? 6 : 3 + Math.round((Math.sin(t / 900) + 1) * 7);
-    const w = Math.max(8, aCv.width / k | 0), h = Math.max(4, aCv.height / k | 0);
-    aCtx.imageSmoothingEnabled = false;
-    aCtx.drawImage(aImg, 0, 0, w, h);
-    aCtx.drawImage(aCv, 0, 0, w, h, 0, 0, aCv.width, aCv.height);
+    // цикл 6 с: 4 с пикселей, потом 2 с — чистое фото
+    const ph = t % 6000;
+    if (reduce || ph > 4000) {
+      aCtx.imageSmoothingEnabled = true;
+      aCtx.drawImage(aImg, 0, 0, aCv.width, aCv.height);
+    } else {
+      const k = 6 + Math.round((Math.sin(ph / 640) + 1) * 14);
+      const w = Math.max(8, aCv.width / k | 0), h = Math.max(4, aCv.height / k | 0);
+      aCtx.imageSmoothingEnabled = false;
+      aCtx.drawImage(aImg, 0, 0, w, h);
+      aCtx.drawImage(aCv, 0, 0, w, h, 0, 0, aCv.width, aCv.height);
+    }
     eCtx.fillStyle = '#000'; eCtx.fillRect(0, 0, aEq.width, aEq.height);
     for (let i = 0; i < 16; i++) {
       const v = Math.abs(Math.sin(t / 180 + i * .7) * Math.cos(t / 330 + i)) * aEq.height | 0;
