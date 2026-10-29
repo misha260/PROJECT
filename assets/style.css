@@ -733,6 +733,12 @@ p{margin:0 0 1em}
 .spin-v--s{width:18px;height:18px;vertical-align:-3px;margin-right:6px}
 .vcr__dbrtv{position:absolute;z-index:3;left:8px;top:34px;width:42px;height:auto;opacity:.9}
 
+.lost{font:11px var(--serif);color:#9a978f;margin:-4px 0 8px!important}
+.lost a{color:#4d73ff;text-shadow:0 0 8px rgba(77,115,255,.5);font:700 12px var(--sans);letter-spacing:.04em}
+.lost-win{width:min(330px,100%);filter:none}
+.lost-win img{width:100%;border:2px inset #888;filter:sepia(.3) brightness(.85)}
+.lost-win p{color:#eee;font:11px Tahoma,sans-serif;margin:6px 0 0!important}
+.lost-win b{font:400 22px var(--team);color:#ffd400;letter-spacing:.14em}
 /* разбросанные ценники */
 .fstk{position:relative;height:0;z-index:6;pointer-events:none}
 .fstk .stk{position:absolute;transform:rotate(var(--r,-5deg));max-width:170px;font-size:13px;box-shadow:0 6px 12px rgba(0,0,0,.55)}

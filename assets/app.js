@@ -105,7 +105,9 @@
   $('#sysOk').addEventListener('click', hideModal);
   modal.addEventListener('click', e => { if (e.target === modal) hideModal(); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) hideModal(); });
-  const fbsWin = $('#fbsWin');
+  const fbsWin = $('#fbsWin'), lostWin = $('#lostWin');
+  $('#lostX').addEventListener('click', () => { lostWin.hidden = true; });
+  lostWin.addEventListener('click', e => { if (e.target === lostWin) lostWin.hidden = true; });
   $('#fbsX').addEventListener('click', () => { fbsWin.hidden = true; });
   fbsWin.addEventListener('click', e => { if (e.target === fbsWin) fbsWin.hidden = true; });
   const sys = {
@@ -116,6 +118,7 @@
     print: () => say('Печать', 'Принтер не найден. Подключите принтер к LPT1 и повторите попытку.'),
     mail: () => say('Outlook Express', 'Не удалось отправить сообщение: сервер SMTP volume01.narod.ru не отвечает.'),
     fbs: () => { fbsWin.hidden = false; },
+    lost: () => { lostWin.hidden = false; },
     comment: () => say('Комментарии', 'Комментарии к этой записи отключены владельцем журнала.'),
     cart: () => say('Корзина', 'Корзина недоступна. Покупка — по ссылкам продавцов.')
   };
@@ -511,10 +514,5 @@
     setInterval(swap, 2600);
   }
 
-  /* ---------- кладовка ---------- */
-  const door = $('#closetDoor');
-  door.addEventListener('click', () => {
-    const inn = door.nextElementSibling, open = inn.hidden;
-    inn.hidden = !open; door.setAttribute('aria-expanded', open);
-  });
+
 })();
