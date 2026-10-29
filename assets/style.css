@@ -752,6 +752,9 @@ p{margin:0 0 1em}
 .credits__echo a{color:#fff;text-decoration:underline}
 .top__heads a:nth-child(2),.cast__heads a:nth-child(2){font-size:.8em;align-self:center;opacity:.85}
 .stk--big{font-size:19px!important;min-height:58px;padding:8px 16px!important;max-width:240px!important}
+.echo-logo{display:inline-grid;place-items:center;width:96px;height:96px;background:#5f5d60;box-shadow:0 8px 18px rgba(0,0,0,.6)}
+.echo-logo img{width:70%!important;height:auto}
+.echo-logo--s{width:28px;height:28px;vertical-align:middle;margin-right:6px;box-shadow:none}
 /* разбросанные ценники */
 .fstk{position:relative;height:0;z-index:6;pointer-events:none}
 .fstk .stk{position:absolute;transform:rotate(var(--r,-5deg));max-width:170px;font-size:13px;box-shadow:0 6px 12px rgba(0,0,0,.55)}
