@@ -755,6 +755,8 @@ p{margin:0 0 1em}
 .echo-logo{display:inline-grid;place-items:center;width:96px;height:96px;background:#5f5d60;box-shadow:0 8px 18px rgba(0,0,0,.6)}
 .echo-logo img{width:70%!important;height:auto}
 .echo-logo--s{width:28px;height:28px;vertical-align:middle;margin-right:6px;box-shadow:none}
+.game__promo{margin:6px 0 4px!important;padding:6px;text-align:center;background:#000;border:2px inset #888;font:11px Tahoma,sans-serif;color:#eee}
+.game__promo b{font:400 22px var(--team);color:#ffd400;letter-spacing:.14em}
 /* разбросанные ценники */
 .fstk{position:relative;height:0;z-index:6;pointer-events:none}
 .fstk .stk{position:absolute;transform:rotate(var(--r,-5deg));max-width:170px;font-size:13px;box-shadow:0 6px 12px rgba(0,0,0,.55)}

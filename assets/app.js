@@ -406,7 +406,8 @@
     const score = st.got;
     if (score > best) { best = score; gB.textContent = best; try { localStorage.setItem('v01-best', best); } catch (e) {} }
     render(performance.now());
-    overlay(win ? 'ВСЕ ГАЗЕТЫ СОБРАНЫ' : 'СИГНАЛ ПОТЕРЯН', win ? '07.11 · 18:00 · fābula HQ' : `газет: ${score}/6`);
+    overlay(win ? 'ВСЕ ГАЗЕТЫ СОБРАНЫ' : 'СИГНАЛ ПОТЕРЯН', win ? 'промокод: SECRET01' : `газет: ${score}/6`);
+    if (win) $('#gPromo').hidden = false;
     gStart.textContent = '▶ ЕЩЁ РАЗ'; gStart.hidden = false;
   };
   const step = t => {
