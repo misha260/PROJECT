@@ -739,6 +739,19 @@ p{margin:0 0 1em}
 .lost-win img{width:100%;border:2px inset #888;filter:sepia(.3) brightness(.85)}
 .lost-win p{color:#eee;font:11px Tahoma,sans-serif;margin:6px 0 0!important}
 .lost-win b{font:400 22px var(--team);color:#ffd400;letter-spacing:.14em}
+/* кредит: красная плашка, ник с шумом */
+.credit{display:flex!important;justify-content:center;align-items:center;gap:10px;width:fit-content;max-width:100%;margin:40px auto 18px!important;padding:10px 16px!important;background:#a3151a;color:#fff!important;
+  font:400 11px var(--grot)!important;letter-spacing:.25em!important;text-transform:uppercase;box-shadow:0 8px 22px rgba(0,0,0,.6)}
+.credit .nick{position:relative;font:700 16px var(--mono);letter-spacing:.06em;text-transform:none;color:#fff!important;text-decoration:none}
+.credit .nick.glitch{text-shadow:2px 0 #0ff,-2px 0 #ff0;transform:translateX(1px) skewX(-8deg)}
+/* fābula */
+.fab{display:block;text-decoration:none;text-shadow:none!important}
+.fab__f{display:block;width:64px;height:auto;margin:0 auto 6px;padding:8px 12px;background:#e9e6df;box-shadow:0 6px 16px rgba(0,0,0,.6)}
+.fab__hq{display:block;width:150px;height:auto;margin:0 auto 4px}
+.credits__echo{margin:-4px 0 10px!important;font:700 10px var(--mono);letter-spacing:.24em;color:#aaa;text-transform:uppercase}
+.credits__echo a{color:#fff;text-decoration:underline}
+.top__heads a:nth-child(2),.cast__heads a:nth-child(2){font-size:.8em;align-self:center;opacity:.85}
+.stk--big{font-size:19px!important;min-height:58px;padding:8px 16px!important;max-width:240px!important}
 /* разбросанные ценники */
 .fstk{position:relative;height:0;z-index:6;pointer-events:none}
 .fstk .stk{position:absolute;transform:rotate(var(--r,-5deg));max-width:170px;font-size:13px;box-shadow:0 6px 12px rgba(0,0,0,.55)}

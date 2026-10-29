@@ -515,4 +515,17 @@
   }
 
 
+
+  /* ---------- ник в подвале дёргается раз в 2 секунды ---------- */
+  const nick = $('#nick');
+  if (nick && !reduce) {
+    const base = nick.dataset.t, junk = '▒░▓#@%&*';
+    setInterval(() => {
+      let n = 0; nick.classList.add('glitch');
+      const t = setInterval(() => {
+        nick.textContent = [...base].map(c => Math.random() < .35 ? junk[Math.random() * junk.length | 0] : c).join('');
+        if (++n > 5) { clearInterval(t); nick.textContent = base; nick.classList.remove('glitch'); }
+      }, 50);
+    }, 2000);
+  }
 })();
