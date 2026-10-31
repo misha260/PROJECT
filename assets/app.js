@@ -131,6 +131,7 @@
 
   /* навязчивая реклама маркета: появляется, пока человек сидит на сайте */
   const ads = [
+    { t: 'kobai.exe — Реклама', img: 'kb-ad', b: 'ОСТАЛАСЬ 1 ШТ!!!', s: 'последняя белая футболка #ОТДЫХ<br>3990₽ · заказ @kobai', c: 'ХОЧУ »', h: '#kobai' },
     { t: 'market.exe — Реклама', img: 'shop-gentle-1', b: 'ХИТ! CD-БРЕЛОК', s: 'Jessie Luck — Gentle<br>заказ в ТГ @jonatanleandoer97', c: 'КУПИТЬ »', h: '#shop' },
     { t: 'ck.exe — Реклама', img: 'shop-ck-3', b: 'NEW!!! ck', s: 'FORTUNA 812 &amp; Clayt Carter<br>CD-брелок · маркет', c: 'ХОЧУ »', h: '#shop' },
     { t: 'whitetrash.exe — Анонс', img: 'whitetrash', b: 'WHITE TRASH', s: 'анонс другого мероприятия<br>подробнее в посте', c: 'ПОДРОБНЕЕ »', h: '#posts' },
@@ -357,8 +358,8 @@
   const rnd = (a, b) => a + Math.random() * (b - a);
   const newGame = () => {
     const vests = Array.from({ length: 6 }, () => ({ x: rnd(10, W - 14), y: rnd(14, H - 14), got: false }));
-    const dancers = Array.from({ length: 3 }, (_, i) => ({ x: [10, W - 14, W / 2][i], y: [H - 14, 12, H - 12][i], ph: rnd(0, 6) }));
-    return { p: { x: W / 2, y: H / 2 }, vests, dancers, got: 0, t: 239, last: performance.now(), over: false, win: false };
+    const dancers = Array.from({ length: 4 }, (_, i) => ({ x: [10, W - 14, W / 2, W - 14][i], y: [H - 14, 12, H - 12, H - 14][i], ph: rnd(0, 6) }));
+    return { p: { x: W / 2, y: H / 2 }, vests, dancers, got: 0, t: 150, last: performance.now(), over: false, win: false };
   };
   const drawWorker = (x, y) => {
     g.fillStyle = '#f2c400'; g.fillRect(x - 3, y - 7, 6, 3);
@@ -389,7 +390,7 @@
     g.fillStyle = '#e8e3d6'; g.fillRect(70, 50, 20, 20); g.fillStyle = '#9a958a'; g.fillRect(70, 66, 20, 4);
     st.dancers.forEach(d => drawDancer(d, t));
     drawWorker(st.p.x, st.p.y);
-    const grd = g.createRadialGradient(st.p.x, st.p.y, 5, st.p.x, st.p.y, 30);
+    const grd = g.createRadialGradient(st.p.x, st.p.y, 4, st.p.x, st.p.y, 24);
     grd.addColorStop(0, 'rgba(0,0,0,0)'); grd.addColorStop(1, 'rgba(0,0,0,.97)');
     g.fillStyle = grd; g.fillRect(0, 0, W, H);
     st.vests.forEach(v => { if (!v.got) drawVest(v, t); });
@@ -420,7 +421,7 @@
     st.p.x = Math.max(4, Math.min(W - 4, st.p.x)); st.p.y = Math.max(8, Math.min(H - 6, st.p.y));
     st.dancers.forEach((d, i) => {
       const dx = st.p.x - d.x, dy = st.p.y - d.y, dist = Math.hypot(dx, dy) || 1;
-      const ds = (.008 + st.got * .002 + i * .0015) * dt;
+      const ds = (.011 + st.got * .003 + i * .0015) * dt;
       d.x += dx / dist * ds + Math.sin(t / 300 + d.ph) * .15; d.y += dy / dist * ds + Math.cos(t / 260 + d.ph) * .15;
       if (dist < 5) gameOver(false);
     });
@@ -536,5 +537,34 @@
         if (++n > 5) { clearInterval(t); nick.textContent = base; nick.classList.remove('glitch'); }
       }, 50);
     }, 2000);
+  }
+
+  /* ---------- DVD-телик: надпись прыгает по углам ---------- */
+  const dvd = $('#tv'), dvdLogo = $('#dvdLogo'), dvdV = $('#dvdVideo'), dvdBtn = $('#dvdBtn');
+  if (dvd) {
+    const scr = dvd.querySelector('.dvd__scr');
+    let x = 10, y = 10, vx = .9, vy = .7, hue = 0, dRaf = 0, dOn = false;
+    const colors = ['#ff3b3b', '#ffe63b', '#3bff6b', '#3bc8ff', '#b06bff', '#ff6bd6', '#fff'];
+    const tick = () => {
+      dRaf = 0; if (!dOn) return;
+      const W2 = scr.clientWidth - dvdLogo.offsetWidth, H2 = scr.clientHeight - dvdLogo.offsetHeight;
+      x += vx; y += vy; let hit = false;
+      if (x <= 0 || x >= W2) { vx = -vx; x = Math.max(0, Math.min(W2, x)); hit = true; }
+      if (y <= 0 || y >= H2) { vy = -vy; y = Math.max(0, Math.min(H2, y)); hit = true; }
+      if (hit) { hue = (hue + 1) % colors.length; dvdLogo.style.color = colors[hue]; }
+      dvdLogo.style.transform = `translate(${x}px,${y}px)`;
+      dRaf = requestAnimationFrame(tick);
+    };
+    new IntersectionObserver(([e]) => {
+      dOn = e.isIntersecting && !reduce;
+      if (dOn && !dRaf) dRaf = requestAnimationFrame(tick);
+      if (!e.isIntersecting && !dvdV.paused) dvdV.pause();
+    }).observe(scr);
+    dvdBtn.addEventListener('click', () => {
+      if (!dvdV.paused) { dvdV.pause(); dvdBtn.textContent = '▶'; dvd.classList.remove('on'); return; }
+      if (!audio.paused) audio.pause(); stopTiles(); stopMini(); if (!video.muted) setSound(false);
+      dvdV.muted = false; dvdV.play().catch(() => { dvdV.muted = true; dvdV.play().catch(() => {}); });
+      dvdBtn.textContent = ''; dvd.classList.add('on');
+    });
   }
 })();

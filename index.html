@@ -50,6 +50,7 @@
       <li><a href="#posts">Посты</a></li>
       <li><a href="#player">Плеер</a></li>
       <li><a href="#video">Видео</a></li>
+      <li><a href="#tv">ТВ · LOST SUMMER</a></li>
       <li><a href="#report">Arschy live<br><small>08.11.2004</small></a></li>
       <li><a href="#tape">Tape VOLUME01<br><small>7 frames</small></a></li>
       <li><a href="#log"><span class="moji" data-moji aria-label="Журнал бригады №6">Р–СѓСЂРЅР°Р» Р±СЂРёРіР°РґС‹ в„–6</span></a></li>
@@ -57,6 +58,7 @@
       <li><a href="#vests"><span class="moji" data-moji aria-label="Жилеты">Р–РёР»РµС‚С‹</span><br><small><span class="moji" data-moji aria-label="светятся без источника">СЃРІРµС‚СЏС‚СЃСЏ Р±РµР· РёСЃС‚РѕС‡РЅРёРєР°</span></small></a></li>
       <li><a href="#misc">Прочие материалы</a></li>
       <li><a href="#shop">Маркет <span class="new">NEW!</span></a></li>
+      <li><a href="#kobai">kobai <span class="new">NEW!</span></a></li>
       <li><a href="#lineup">Line-up</a></li>
       <li><a href="#access">Допуск 07.11</a></li>
       <li><a href="https://moscow.qtickets.events/264019-volume01-matveykin-x-wiluji" target="_blank" rel="noopener">Билеты</a></li>
@@ -422,6 +424,21 @@
     <img class="amp__spk amp__spk--r" src="assets/img/speaker.gif" width="240" height="320" alt="">
     </section>
 
+    <!-- DVD-ТЕЛИК -->
+    <section class="dvd" id="tv" aria-label="Архив: LOST SUMMER 30.08">
+      <p class="lbl">архив · LOST SUMMER 30.08 · Jessie Luck</p>
+    <div class="stk-row" aria-hidden="true"><span style="right:2%;top:-8px;--r:6deg" class="stk stk--n stk--o" ><small>USED</small>#clu</span></div>
+      <div class="dvd__tv">
+        <div class="dvd__scr">
+          <video id="dvdVideo" src="assets/video/lost-summer.mp4" poster="assets/img/tv/lost-summer.webp" playsinline loop preload="none"></video>
+          <span class="dvd__logo" id="dvdLogo">VOLUME01</span>
+          <button class="dvd__btn" id="dvdBtn" aria-label="Включить запись LOST SUMMER">▶</button>
+        </div>
+        <div class="dvd__panel" aria-hidden="true"><i></i><span>DVD · AV1 · 30.08</span><b></b><b></b></div>
+      </div>
+      <figure class="cut cut--l jacket"><img src="assets/img/jacket.webp" width="760" height="507" alt="Бежевый жакет на полу" loading="lazy"><figcaption>тот самый жакет</figcaption></figure>
+    </section>
+
     <!-- 3. КАССЕТА -->
     <section id="tape">
       <div class="txt">
@@ -610,7 +627,7 @@
     <div class="ribs" aria-hidden="true"><i class="rib rib--hang" style="--x:6%;--y:-20px;--w:240px;--r:93deg"></i><i class="rib rib--y" style="--x:40%;--y:30px;--w:90%;--r:4deg"></i></div>
     <!-- МАРКЕТ -->
     <section class="shop" id="shop">
-    <div class="fstk" aria-hidden="true"><span style="right:-10px;top:2px;--r:-12deg" class="stk stk--n stk--c" ><small>REDUCED TO</small>Максим Максаков</span></div>
+    <div class="fstk" aria-hidden="true"><span style="right:-10px;top:2px;--r:-12deg" class="stk stk--n stk--c" ><small>REDUCED TO</small>Максим Максаков</span><img class="kb__logo-stk" src="assets/img/kobai-logo.webp" width="360" height="156" alt="kobai"></div>
       <div class="shop__head"><b><img class="spin-v spin-v--s" src="assets/img/t/vinyl-matveykin.webp" width="180" height="180" alt="">МАРКЕТ</b><a href="#" data-sys="cart">Корзина (0)</a></div>
       <p class="shop__note">CD-брелоки — заказ в телеграме <a href="https://t.me/jonatanleandoer97" target="_blank" rel="noopener">@jonatanleandoer97</a>. Оплата наличными у вебмастера не принимается.</p>
       <div class="prod">
@@ -644,7 +661,7 @@
       </div>
       <table class="shop__t">
         <tr><th colspan="3">Также — по ссылкам</th></tr>
-        <tr><td class="shop__n"><a href="https://t.me/kobait" target="_blank" rel="noopener">kobai</a></td><td>магазин</td><td><a class="win__btn prod__buy" href="https://t.me/kobait" target="_blank" rel="noopener">Перейти</a></td></tr>
+        <tr><td class="shop__n"><a href="https://t.me/kobai" target="_blank" rel="noopener">kobai</a></td><td>магазин</td><td><a class="win__btn prod__buy" href="https://t.me/kobai" target="_blank" rel="noopener">Перейти</a></td></tr>
         <tr><td class="shop__n"><a href="https://t.me/Hocus_clo" target="_blank" rel="noopener">hocus</a></td><td>одежда</td><td><a class="win__btn prod__buy" href="https://t.me/Hocus_clo" target="_blank" rel="noopener">Перейти</a></td></tr>
         <tr><td class="shop__n">merch</td><td>VOLUME01</td><td><button class="win__btn" data-sys="cart">В корзину</button></td></tr>
         <tr><td class="shop__n">&amp; more…</td><td><span class="rd" tabindex="0" data-alt="узнаете на месте">████ ██ █████</span></td><td></td></tr>
@@ -656,6 +673,57 @@
           <p>запись — услугой при покупке билета</p>
           <a class="win__btn prod__buy" href="https://moscow.qtickets.events/264019-volume01-matveykin-x-wiluji" target="_blank" rel="noopener">Записаться</a>
         </div>
+      </div>
+    </section>
+
+    <!-- KOBAI -->
+    <section class="shop shop--kb" id="kobai">
+      <div class="shop__head"><b><img class="kb__logo-s" src="assets/img/kobai-logo.webp" width="360" height="156" alt="">KOBAI</b><a href="#" data-sys="cart">Корзина (0)</a></div>
+      <p class="shop__note">Все позиции от kobai можно заказать в телеграме — <a href="https://t.me/kobai" target="_blank" rel="noopener">@kobai</a>!</p>
+      <div class="prod">
+        <div class="prod__img"><img src="assets/img/kb-black-1.webp" width="600" height="600" alt="" loading="lazy" data-full="kb-black-1"></div>
+        <div class="prod__info">
+          <p class="prod__hit">ЭКСКЛЮЗИВ</p>
+          <h4 class="kb__name">#Ợ<br>⍡ДӸХ t͙e͙e͙ ıuʌǝɹsǝ</h4>
+          <p>Эксклюзивные футболки<br><b>#ОТДЫХ</b><br>в черном цвете.<br>Доступны в размерах от S до XL<br>Количество крайне ограничено!</p>
+          <p class="prod__price">Цена: <b>3990₽</b></p>
+          <a class="win__btn prod__buy" href="https://t.me/kobai" target="_blank" rel="noopener">Купить</a>
+        </div>
+        <div class="prod__gal"><a href="#" data-img="kb-black-1"><img src="assets/img/t/kb-black-1.webp" width="260" height="260" alt="Чёрная футболка #ОТДЫХ, фото 1" loading="lazy"></a>
+<a href="#" data-img="kb-black-2"><img src="assets/img/t/kb-black-2.webp" width="260" height="260" alt="Чёрная футболка #ОТДЫХ, фото 2" loading="lazy"></a>
+<a href="#" data-img="kb-black-3"><img src="assets/img/t/kb-black-3.webp" width="260" height="260" alt="Чёрная футболка #ОТДЫХ, фото 3" loading="lazy"></a>
+<a href="#" data-img="kb-black-4"><img src="assets/img/t/kb-black-4.webp" width="260" height="260" alt="Чёрная футболка #ОТДЫХ, фото 4" loading="lazy"></a></div>
+      </div>
+      <div class="prod">
+        <div class="prod__img"><img src="assets/img/kb-white-1.webp" width="600" height="600" alt="" loading="lazy" data-full="kb-white-1"><span class="prod__left">ОСТАЛОСЬ: 1ШТ!</span></div>
+        <div class="prod__info">
+          
+          <h4 class="kb__name">#Ợ<br>⍡ДӸХ t͙e͙e͙ 𝓌𝒽𝒾𝓉𝑒</h4>
+          <p><b>Последняя белая футболка<br>#ОТДЫХ<br>которая осталась!!!</b><br>#отдыхлюдям !<br>#хлопок<br>#vacay</p>
+          <p class="prod__price">Цена: <b>3990₽</b></p>
+          <a class="win__btn prod__buy" href="https://t.me/kobai" target="_blank" rel="noopener">Купить</a>
+        </div>
+        <div class="prod__gal"><a href="#" data-img="kb-white-1"><img src="assets/img/t/kb-white-1.webp" width="260" height="260" alt="Белая футболка #ОТДЫХ, фото 1" loading="lazy"></a>
+<a href="#" data-img="kb-white-2"><img src="assets/img/t/kb-white-2.webp" width="260" height="260" alt="Белая футболка #ОТДЫХ, фото 2" loading="lazy"></a>
+<a href="#" data-img="kb-white-3"><img src="assets/img/t/kb-white-3.webp" width="260" height="260" alt="Белая футболка #ОТДЫХ, фото 3" loading="lazy"></a>
+<a href="#" data-img="kb-white-4"><img src="assets/img/t/kb-white-4.webp" width="260" height="260" alt="Белая футболка #ОТДЫХ, фото 4" loading="lazy"></a>
+<a href="#" data-img="kb-white-5"><img src="assets/img/t/kb-white-5.webp" width="260" height="260" alt="Белая футболка #ОТДЫХ, фото 5" loading="lazy"></a>
+<a href="#" data-img="kb-white-6"><img src="assets/img/t/kb-white-6.webp" width="260" height="260" alt="Белая футболка #ОТДЫХ, фото 6" loading="lazy"></a>
+<a href="#" data-img="kb-white-7"><img src="assets/img/t/kb-white-7.webp" width="260" height="260" alt="Белая футболка #ОТДЫХ, фото 7" loading="lazy"></a>
+<a href="#" data-img="kb-white-8"><img src="assets/img/t/kb-white-8.webp" width="260" height="260" alt="Белая футболка #ОТДЫХ, фото 8" loading="lazy"></a>
+<a href="#" data-img="kb-white-9"><img src="assets/img/t/kb-white-9.webp" width="260" height="260" alt="Белая футболка #ОТДЫХ, фото 9" loading="lazy"></a></div>
+      </div>
+      <div class="prod">
+        <div class="prod__img"><img src="assets/img/kb-bracelet-1.webp" width="600" height="600" alt="" loading="lazy" data-full="kb-bracelet-1"></div>
+        <div class="prod__info">
+          <p class="prod__hit prod__hit--new">СВЕТЯТСЯ В ТЕМНОТЕ</p>
+          <h4 class="kb__name">¸,ø¤º°`°º¤ø,¸<br>Браслеты "ПаНкИ Ня!!!!"<br>¸,ø¤º°`°º¤ø,¸</h4>
+          <p>Браслеты концептуально связанные с футболками<br><b>#ОТДЫХ</b><br><b>Голубой и розовый светятся в темноте!</b></p>
+          <p class="prod__price">Цена: <b>одна штука 300₽<br>Пак 4 цвета — 900₽</b></p>
+          <a class="win__btn prod__buy" href="https://t.me/kobai" target="_blank" rel="noopener">Купить</a>
+        </div>
+        <div class="prod__gal"><a href="#" data-img="kb-bracelet-1"><img src="assets/img/t/kb-bracelet-1.webp" width="260" height="260" alt="Браслеты ПаНкИ Ня, фото 1" loading="lazy"></a>
+<a href="#" data-img="kb-bracelet-2"><img src="assets/img/t/kb-bracelet-2.webp" width="260" height="260" alt="Браслеты ПаНкИ Ня, фото 2" loading="lazy"></a></div>
       </div>
     </section>
 
@@ -712,7 +780,7 @@
           <li><a href="https://www.instagram.com/emozanotti" target="_blank" rel="noopener">DJ EMOZANOTTI</a></li>
         </ul>
       </div>
-      <p class="cast__more"><span><a href="https://t.me/kobait" target="_blank" rel="noopener">kobai</a> · <a href="https://t.me/Hocus_clo" target="_blank" rel="noopener">hocus</a> · merch · barber — <a href="#shop">shop</a></span><span>+ <span class="rd" tabindex="0" data-alt="SECRET GUESTS">██████ ██████</span></span></p>
+      <p class="cast__more"><span><a href="https://t.me/kobai" target="_blank" rel="noopener">kobai</a> · <a href="https://t.me/Hocus_clo" target="_blank" rel="noopener">hocus</a> · merch · barber — <a href="#shop">shop</a></span><span>+ <span class="rd" tabindex="0" data-alt="SECRET GUESTS">██████ ██████</span></span></p>
     </section>
 
     <figure class="ph ph--full" data-light>
@@ -769,7 +837,6 @@
       <span class="b88 b88--l"><b>fābula HQ</b><i>accepted here</i></span>
     </div>
     <p class="notice" aria-hidden="true"><b>NOTICE:</b><span>у вебмастера с собой меньше 300 ₽ наличными</span></p>
-    <div class="fstk" aria-hidden="true"><span style="right:-4px;top:7px;--r:4deg" class="stk stk--n stk--o" ><small>USED</small>#clu</span></div>
     <p class="sysfoot">Страница сгенерирована за 0.0359 сек. · Last-Modified: Mon, 08 Nov 2004 03:59:00 GMT<br>Ваш браузер не поддерживает фреймы.</p>
     <p class="wide wide--foot">V O L U M E 0 1 &nbsp;(c) 2 0 0 4 / 2 0 2 6<br>A l l &nbsp;R i g h t s &nbsp;R e s e r v e d .</p>
     <div class="logos"><a class="echo-w" href="https://t.me/echotypes" target="_blank" rel="noopener"><img src="assets/img/logo-w.webp" width="300" height="186" alt="echotypes" loading="lazy"></a><img class="spin-v" src="assets/img/t/vinyl-matveykin.webp" width="180" height="180" alt="Matveykin"><a class="fab-sq" href="https://t.me/fabula_gallery" target="_blank" rel="noopener"><img src="assets/img/fabula-f.webp" width="258" height="400" alt="fābula"></a><img class="logos__horse" src="assets/img/horses-white.webp" width="321" height="647" alt="Логотип с лошадьми" loading="lazy"></div>
