@@ -797,6 +797,8 @@ p{margin:0 0 1em}
 .stk-row .stk{position:absolute;transform:rotate(var(--r,-5deg));max-width:200px;font-size:14px;box-shadow:0 6px 12px rgba(0,0,0,.55)}
 .vids .stk-row{grid-column:1/-1;margin:0}
 /* kobai */
+.shop__head b{font:700 24px/1.1 Arial,Helvetica,sans-serif!important;letter-spacing:0!important;text-transform:none!important;color:#fff}
+.kb__logo-big{display:block;width:92%;height:auto;margin:14px auto 4px}
 .shop--kb .shop__head{background:linear-gradient(#5b4bd6,#2a1f8a);border-bottom-color:#8a7cff}
 .kb__logo-s{width:auto;height:18px;vertical-align:-3px;margin-right:6px;background:#fff;padding:1px 3px}
 .kb__name{font:700 15px/1.35 var(--serif)!important;word-break:break-word}
