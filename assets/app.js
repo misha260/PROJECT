@@ -331,12 +331,12 @@
   });
   tiles.forEach(t => { tileIO.observe(t); const n = t.querySelector('.vt__noise'); if (n) noiseFrame(n); });
   function stopTiles(except) {
-    tiles.forEach(t => { if (t === except) return; const v = t.querySelector('video'); v.pause(); t.classList.remove('on'); t.querySelector('.vt__btn').textContent = '▶'; });
+    tiles.forEach(t => { if (t === except) return; const v = t.querySelector('video'); v.pause(); t.classList.remove('on'); t.querySelector('.vt__btn').textContent = '▶︎'; });
   }
   tiles.forEach(t => {
     const v = t.querySelector('video'), btn = t.querySelector('.vt__btn');
     btn.addEventListener('click', () => {
-      if (t.classList.contains('on') && !v.paused) { v.pause(); t.classList.remove('on'); btn.textContent = '▶'; runNoise(); return; }
+      if (t.classList.contains('on') && !v.paused) { v.pause(); t.classList.remove('on'); btn.textContent = '▶︎'; runNoise(); return; }
       stopTiles(t); stopMini();
       if (!audio.paused) audio.pause();
       if (!video.muted) setSound(false);
@@ -409,7 +409,7 @@
     render(performance.now());
     overlay(win ? 'ВСЕ ГАЗЕТЫ СОБРАНЫ' : 'СИГНАЛ ПОТЕРЯН', win ? 'промокод: SECRET01' : `газет: ${score}/6`);
     if (win) $('#gPromo').hidden = false;
-    gStart.textContent = '▶ ЕЩЁ РАЗ'; gStart.hidden = false;
+    gStart.textContent = '▶︎ ЕЩЁ РАЗ'; gStart.hidden = false;
   };
   const step = t => {
     gRaf = 0;
@@ -499,7 +499,7 @@
   /* ---------- мини-плееры у постов ---------- */
   const miniAudio = new Audio(); miniAudio.preload = 'none';
   let miniBtn = null;
-  function stopMini() { miniAudio.pause(); if (miniBtn) { miniBtn.classList.remove('on'); miniBtn.querySelector('i').textContent = '▶'; } miniBtn = null; }
+  function stopMini() { miniAudio.pause(); if (miniBtn) { miniBtn.classList.remove('on'); miniBtn.querySelector('i').textContent = '▶︎'; } miniBtn = null; }
   $$('.mini').forEach(b => b.addEventListener('click', () => {
     if (miniBtn === b) { stopMini(); return; }
     stopMini(); if (!audio.paused) audio.pause(); stopTiles(); if (!video.muted) setSound(false);
