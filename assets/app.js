@@ -539,11 +539,11 @@
     }, 2000);
   }
 
-  /* ---------- DVD-телик: надпись прыгает по углам ---------- */
-  const dvd = $('#tv'), dvdLogo = $('#dvdLogo'), dvdV = $('#dvdVideo'), dvdBtn = $('#dvdBtn');
+  /* ---------- выключенный телик: VOLUME01 прыгает по углам ---------- */
+  const dvd = $('#tv'), dvdLogo = $('#dvdLogo');
   if (dvd) {
     const scr = dvd.querySelector('.dvd__scr');
-    let x = 10, y = 10, vx = .9, vy = .7, hue = 0, dRaf = 0, dOn = false;
+    let x = 10, y = 10, vx = 2.4, vy = 1.9, hue = 0, dRaf = 0, dOn = false;
     const colors = ['#ff3b3b', '#ffe63b', '#3bff6b', '#3bc8ff', '#b06bff', '#ff6bd6', '#fff'];
     const tick = () => {
       dRaf = 0; if (!dOn) return;
@@ -555,16 +555,6 @@
       dvdLogo.style.transform = `translate(${x}px,${y}px)`;
       dRaf = requestAnimationFrame(tick);
     };
-    new IntersectionObserver(([e]) => {
-      dOn = e.isIntersecting && !reduce;
-      if (dOn && !dRaf) dRaf = requestAnimationFrame(tick);
-      if (!e.isIntersecting && !dvdV.paused) dvdV.pause();
-    }).observe(scr);
-    dvdBtn.addEventListener('click', () => {
-      if (!dvdV.paused) { dvdV.pause(); dvdBtn.textContent = '▶'; dvd.classList.remove('on'); return; }
-      if (!audio.paused) audio.pause(); stopTiles(); stopMini(); if (!video.muted) setSound(false);
-      dvdV.muted = false; dvdV.play().catch(() => { dvdV.muted = true; dvdV.play().catch(() => {}); });
-      dvdBtn.textContent = ''; dvd.classList.add('on');
-    });
+    new IntersectionObserver(([e]) => { dOn = e.isIntersecting && !reduce; if (dOn && !dRaf) dRaf = requestAnimationFrame(tick); }).observe(scr);
   }
 })();

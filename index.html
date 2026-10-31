@@ -50,7 +50,7 @@
       <li><a href="#posts">Посты</a></li>
       <li><a href="#player">Плеер</a></li>
       <li><a href="#video">Видео</a></li>
-      <li><a href="#tv">ТВ · LOST SUMMER</a></li>
+      <li><a href="#archive">Архив · LOST SUMMER</a></li>
       <li><a href="#report">Arschy live<br><small>08.11.2004</small></a></li>
       <li><a href="#tape">Tape VOLUME01<br><small>7 frames</small></a></li>
       <li><a href="#log"><span class="moji" data-moji aria-label="Журнал бригады №6">Р–СѓСЂРЅР°Р» Р±СЂРёРіР°РґС‹ в„–6</span></a></li>
@@ -424,18 +424,20 @@
     <img class="amp__spk amp__spk--r" src="assets/img/speaker.gif" width="240" height="320" alt="">
     </section>
 
-    <!-- DVD-ТЕЛИК -->
-    <section class="dvd" id="tv" aria-label="Архив: LOST SUMMER 30.08">
-      <p class="lbl">архив · LOST SUMMER 30.08 · Jessie Luck</p>
+    <!-- АРХИВ LOST SUMMER -->
+    <section class="arch" id="archive" aria-label="Архив: LOST SUMMER 30.08, Jessie Luck">
+      <p class="arch__h"><span>АРХИВ</span><b>LOST SUMMER 30.08</b><i>Jessie Luck</i></p>
     <div class="stk-row" aria-hidden="true"><span style="right:2%;top:-8px;--r:6deg" class="stk stk--n stk--o" ><small>USED</small>#clu</span></div>
-      <div class="dvd__tv">
-        <div class="dvd__scr">
-          <video id="dvdVideo" src="assets/video/lost-summer.mp4" poster="assets/img/tv/lost-summer.webp" playsinline loop preload="none"></video>
-          <span class="dvd__logo" id="dvdLogo">VOLUME01</span>
-          <button class="dvd__btn" id="dvdBtn" aria-label="Включить запись LOST SUMMER">▶</button>
+      <figure class="vt vt--arch">
+        <div class="vt__scr">
+          <video src="assets/video/lost-summer.mp4" poster="assets/img/tv/lost-summer.webp" playsinline loop preload="none"></video>
+          <canvas class="vt__noise" width="96" height="54" aria-hidden="true"></canvas>
+          <button class="vt__btn" aria-label="Включить запись LOST SUMMER, Jessie Luck">▶</button>
+          <span class="arch__rec" aria-hidden="true">● REC</span>
+          <span class="ts">30.08.2026 23:41</span>
         </div>
-        <div class="dvd__panel" aria-hidden="true"><i></i><span>DVD · AV1 · 30.08</span><b></b><b></b></div>
-      </div>
+        <figcaption>tape 30-08 · jessie_luck_live.avi</figcaption>
+      </figure>
       <figure class="cut cut--l jacket"><img src="assets/img/jacket.webp" width="760" height="507" alt="Бежевый жакет на полу" loading="lazy"><figcaption>тот самый жакет</figcaption></figure>
     </section>
 
@@ -476,6 +478,16 @@
         </div>
       </div>
     </div>
+
+    <!-- ВЫКЛЮЧЕННЫЙ ТЕЛИК -->
+    <section class="dvd" id="tv" aria-label="Выключенный телевизор">
+      <div class="dvd__tv">
+        <div class="dvd__scr">
+          <span class="dvd__logo" id="dvdLogo">VOLUME01</span>
+        </div>
+        <div class="dvd__panel" aria-hidden="true"><i></i><span>NO SIGNAL · AV1</span><b></b><b></b></div>
+      </div>
+    </section>
 
     <!-- 4. ЖУРНАЛ -->
     <section id="log">
