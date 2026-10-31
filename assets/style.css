@@ -817,10 +817,13 @@ p{margin:0 0 1em}
 .jacket{margin-top:24px}
 .dvd__scr{background:radial-gradient(ellipse at 30% 20%,#1d2226,#050607 70%)!important}
 /* архив LOST SUMMER */
+@keyframes neon{0%,100%{opacity:1}8%{opacity:.35}9%{opacity:1}56%{opacity:1}57%{opacity:.5}59%{opacity:1}}
+.vt--arch .vt__scr video{opacity:1!important}
+.vt--arch .vt__btn{background:radial-gradient(circle at center,rgba(0,0,0,.35),transparent 60%)}
 .arch{margin:36px 0 20px}
-.arch__h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin:0 0 10px!important;font-family:var(--team);color:#7fb2ff;text-shadow:0 0 6px #2f6bff,0 0 18px rgba(47,107,255,.8)}
+.arch__h{flex-direction:column;align-items:flex-start;animation:neon 3.2s steps(1) infinite;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin:0 0 10px!important;font-family:var(--team);color:#7fb2ff;text-shadow:0 0 6px #2f6bff,0 0 18px rgba(47,107,255,.8)}
 .arch__h span{font-size:12px;letter-spacing:.6em}
-.arch__h b{font-weight:400;font-size:clamp(17px,5.6vw,30px);letter-spacing:.04em;transform:scaleX(1.25);transform-origin:0 50%;margin-right:22%;white-space:nowrap}
+.arch__h b{display:block;width:100%;font-weight:400;font-size:clamp(24px,8vw,44px);line-height:1;letter-spacing:.02em;color:#a9ccff;transform:scaleY(1.9);transform-origin:50% 0;margin:6px 0 34px;white-space:nowrap;text-shadow:0 0 4px #4d8bff,0 0 14px #2f6bff,0 0 30px rgba(47,107,255,.9)}
 .arch__h i{font-style:normal;font-size:15px;letter-spacing:.3em;color:#bcd6ff}
 .arch .stk-row{height:46px}
 .vt--arch{padding:10px 10px 30px;background:#e9e5da;transform:rotate(-1.5deg);box-shadow:0 18px 34px rgba(0,0,0,.8)}

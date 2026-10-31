@@ -319,7 +319,7 @@
   const runNoise = () => {
     noiseLoop = 0;
     let any = false;
-    shownTiles.forEach(t => { if (!t.classList.contains('on') || t.classList.contains('tuning')) { noiseFrame(t.querySelector('.vt__noise')); any = true; } });
+    shownTiles.forEach(t => { const n = t.querySelector('.vt__noise'); if (n && (!t.classList.contains('on') || t.classList.contains('tuning'))) { noiseFrame(n); any = true; } });
     if (any && !reduce) noiseLoop = setTimeout(() => requestAnimationFrame(runNoise), 70);
   };
   const tileIO = new IntersectionObserver(entries => {
@@ -329,7 +329,7 @@
     });
     if (!noiseLoop) runNoise();
   });
-  tiles.forEach(t => { tileIO.observe(t); noiseFrame(t.querySelector('.vt__noise')); });
+  tiles.forEach(t => { tileIO.observe(t); const n = t.querySelector('.vt__noise'); if (n) noiseFrame(n); });
   function stopTiles(except) {
     tiles.forEach(t => { if (t === except) return; const v = t.querySelector('video'); v.pause(); t.classList.remove('on'); t.querySelector('.vt__btn').textContent = '▶'; });
   }
