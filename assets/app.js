@@ -131,11 +131,11 @@
 
   /* навязчивая реклама маркета: появляется, пока человек сидит на сайте */
   const ads = [
-    { t: 'matveykin_shop.exe — Реклама', img: 'shop-gentle-1', b: 'ХИТ! CD-БРЕЛОК', s: 'Jessie Luck — Gentle<br>заказ в ТГ @jonatanleandoer97', c: 'КУПИТЬ »', h: '#shop' },
-    { t: 'ck.exe — Реклама', img: 'shop-ck-3', b: 'NEW!!! ck', s: 'FORTUNA 812 &amp; Clayt Carter<br>CD-брелок · Matveykin Shop', c: 'ХОЧУ »', h: '#shop' },
-    { t: 'whitetrash.exe — Реклама', img: 'whitetrash', b: 'WHITE TRASH', s: 'сэмплы капсулы<br>скоро · подробнее в посте', c: 'ПОДРОБНЕЕ »', h: '#posts' },
+    { t: 'market.exe — Реклама', img: 'shop-gentle-1', b: 'ХИТ! CD-БРЕЛОК', s: 'Jessie Luck — Gentle<br>заказ в ТГ @jonatanleandoer97', c: 'КУПИТЬ »', h: '#shop' },
+    { t: 'ck.exe — Реклама', img: 'shop-ck-3', b: 'NEW!!! ck', s: 'FORTUNA 812 &amp; Clayt Carter<br>CD-брелок · маркет', c: 'ХОЧУ »', h: '#shop' },
+    { t: 'whitetrash.exe — Анонс', img: 'whitetrash', b: 'WHITE TRASH', s: 'анонс другого мероприятия<br>подробнее в посте', c: 'ПОДРОБНЕЕ »', h: '#posts' },
     { t: 'barber.exe — Реклама', b: 'СТРИЖКА НА ИВЕНТЕ', s: 'барбер на ивенте 07.11<br>запись — услугой в билетах', c: 'ЗАПИСАТЬСЯ »', h: '#shop' },
-    { t: 'matveykin_shop.exe — Реклама', b: 'MATVEYKIN SHOP!!!', s: 'CD-брелоки · kobai · hocus<br>merch · barber', c: 'ЖМИ СЮДА »', h: '#shop' }
+    { t: 'market.exe — Реклама', b: 'МАРКЕТ!!!', s: 'CD-брелоки · kobai · hocus<br>merch · barber', c: 'ЖМИ СЮДА »', h: '#shop' }
   ];
   const adpop = $('#adpop'), adX = $('#adX');
   let adN = 0;
