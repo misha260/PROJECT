@@ -797,6 +797,19 @@ p{margin:0 0 1em}
 .stk-row .stk{position:absolute;transform:rotate(var(--r,-5deg));max-width:200px;font-size:14px;box-shadow:0 6px 12px rgba(0,0,0,.55)}
 .vids .stk-row{grid-column:1/-1;margin:0}
 /* kobai */
+.prod--glow{position:relative;padding:8px;border:2px solid #9ee7ff;border-radius:4px;animation:glowc 1.6s ease-in-out infinite}
+@keyframes glowc{0%,100%{box-shadow:0 0 6px #9ee7ff,0 0 18px rgba(158,231,255,.5)}50%{box-shadow:0 0 14px #c8f4ff,0 0 36px rgba(158,231,255,.9)}}
+.prod__left--new{background:#0a8fd8!important}
+/* реклама-пост */
+.adpost{margin:34px 0 26px}
+.adpost__win{max-width:360px;margin:0 auto;background:#5f5d60;border:3px solid;border-color:#fff #404040 #404040 #fff;box-shadow:0 18px 40px rgba(0,0,0,.85);font:12px Tahoma,Verdana,sans-serif}
+.adpost__win .win__bar{background:linear-gradient(90deg,#800000,#e07a7a)}
+.adpost__body{display:block;margin:6px;padding:12px 10px 14px;text-align:center;background:repeating-linear-gradient(-45deg,#ff2d6f 0 12px,#ff4b86 12px 24px)}
+.adpost__t{display:block;font:400 30px/1 var(--team);color:#fff200;text-shadow:2px 2px 0 #000;animation:blink .6s steps(2) infinite}
+.adpost__body img{display:block;width:100%;margin:10px 0;border:4px solid #fff200;transform:rotate(-1.5deg)}
+.adpost__info{margin:0 0 10px!important;font:700 13px/1.5 var(--sans);color:#fff;text-shadow:1px 1px 0 #000}
+.adpost__info .moji{font-family:var(--mono);color:#ffe0e8;letter-spacing:0}
+.adpost__buy{display:inline-block;font:700 14px var(--sans);background:#00e000;color:#000!important;padding:8px 14px;border:2px outset #6f6;text-decoration:none}
 .shop__head b{font:700 24px/1.1 Arial,Helvetica,sans-serif!important;letter-spacing:0!important;text-transform:none!important;color:#fff}
 .mv__logo-big{display:block;width:58%;max-width:300px;height:auto;margin:16px auto 6px;animation-duration:6s!important;filter:drop-shadow(0 10px 18px rgba(0,0,0,.7))}
 .kb__logo-big{display:block;width:92%;height:auto;margin:14px auto 4px}
