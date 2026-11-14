@@ -4,6 +4,16 @@
   // часы
   const clock = $('#clock');
   setInterval(() => { const d = new Date(); clock.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; }, 1000);
+  // таймер до 11.12 18:00 по Москве
+  const target = Date.UTC(2026, 11, 11, 15, 0, 0);
+  const cdD = $('#cdD'), cdH = $('#cdH'), cdM = $('#cdM'), cdS = $('#cdS');
+  const tickCd = () => {
+    let s = Math.max(0, Math.floor((target - Date.now()) / 1000));
+    if (!s) { $('.cd__l').textContent = 'восстановление началось'; }
+    cdD.textContent = pad(Math.floor(s / 86400)); s %= 86400;
+    cdH.textContent = pad(Math.floor(s / 3600)); cdM.textContent = pad(Math.floor(s % 3600 / 60)); cdS.textContent = pad(s % 60);
+  };
+  tickCd(); setInterval(tickCd, 1000);
   // кракозябры сыпятся
   const junk = '\uFFFD▒░▓ЃЌЉЊЋЏђѓќљњћџ¦§©¬®°±µ¶·';
   document.querySelectorAll('[data-moji]').forEach(el => {
