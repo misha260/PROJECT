@@ -31,8 +31,6 @@
   const crash = $('#crash');
   if (!reduce) setInterval(() => { if (Math.random() < .35) { crash.classList.add('on'); setTimeout(() => crash.classList.remove('on'), 90 + Math.random() * 120); } }, 1800);
   // ник дёргается
-  const nick = $('#nick');
-  if (!reduce) setInterval(() => { const b = '@yanbasee'; nick.textContent = [...b].map(c => Math.random() < .35 ? '▒' : c).join(''); setTimeout(() => nick.textContent = b, 250); }, 2000);
   // плеер
   const au = $('#au'), items = [...document.querySelectorAll('#pl li')], t = $('#t'), ttl = $('#ttl'), seek = $('#seek');
   const vis = $('#vis'), vc = vis.getContext('2d');
