@@ -1,0 +1,90 @@
+@font-face{font-family:'Unbounded';font-weight:800;font-display:swap;src:url(../fonts/unbounded-800.woff2) format('woff2')}
+@font-face{font-family:'Team';font-display:swap;src:url(../fonts/team.woff2) format('woff2')}
+@font-face{font-family:'Plex';font-weight:600;font-display:swap;src:url(../fonts/plexmono-600.woff2) format('woff2')}
+:root{--red:#ff3a1f;--ink:#e9e6df}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:var(--ink);overflow-x:hidden;font-variant-emoji:text}
+body{font:13px/1.5 Verdana,Tahoma,sans-serif}
+/* фон: сломанный телевизор */
+.tv{position:fixed;inset:0;z-index:0}
+.tv i{position:absolute;inset:-4%;background:center/cover no-repeat;opacity:0;filter:saturate(1.2) brightness(.55)}
+.tv i:nth-child(1){animation:tvA 2.4s steps(1) infinite}
+.tv i:nth-child(2){animation:tvB 2.4s steps(1) infinite}
+.tv i:nth-child(3){animation:tvC 2.4s steps(1) infinite}
+@keyframes tvA{0%,40%{opacity:1;transform:none}41%,100%{opacity:0}}
+@keyframes tvB{0%,40%{opacity:0}41%,46%{opacity:1;transform:translateX(-3%) skewX(-4deg)}47%,75%{opacity:1;transform:none}76%,100%{opacity:0}}
+@keyframes tvC{0%,75%{opacity:0}76%,100%{opacity:1;transform:scaleY(1.06)}}
+.scan{position:fixed;inset:0;z-index:1;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.45) 0 1px,transparent 1px 3px),radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.85))}
+.wrap{position:relative;z-index:2;max-width:640px;margin:0 auto;padding:18px max(16px,env(safe-area-inset-right)) 60px max(16px,env(safe-area-inset-left))}
+.sys{font:600 11px 'Plex',monospace;color:#bbb;background:rgba(0,0,0,.7);padding:4px 8px;margin:0 0 18px;display:flex;justify-content:space-between;gap:8px}
+.sys b{color:var(--red)}
+.blink{animation:blink .7s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+/* логотип ломается */
+.logo{position:relative;margin:0;font:800 clamp(40px,13.2vw,100px)/.95 'Unbounded',sans-serif;letter-spacing:-.05em;text-align:center;
+  background:linear-gradient(180deg,#f2f2f2 0%,#a9a9a9 45%,#5a5a5a 55%,#b8b8b8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 3px 0 #000);animation:jitter 3s steps(1) infinite}
+.logo::before,.logo::after{content:attr(data-text);position:absolute;inset:0;-webkit-text-fill-color:currentColor;pointer-events:none}
+.logo::before{color:#0ff;clip-path:inset(20% 0 55% 0);transform:translateX(-6px);mix-blend-mode:screen;animation:sl1 1.3s steps(1) infinite}
+.logo::after{color:var(--red);clip-path:inset(60% 0 8% 0);transform:translateX(6px);mix-blend-mode:screen;animation:sl2 1.7s steps(1) infinite}
+@keyframes sl1{0%{clip-path:inset(20% 0 55% 0);transform:translateX(-6px)}33%{clip-path:inset(5% 0 80% 0);transform:translateX(10px)}66%{clip-path:inset(45% 0 30% 0);transform:translateX(-12px)}}
+@keyframes sl2{0%{clip-path:inset(60% 0 8% 0);transform:translateX(6px)}40%{clip-path:inset(30% 0 50% 0);transform:translateX(-9px)}80%{clip-path:inset(75% 0 2% 0);transform:translateX(14px)}}
+@keyframes jitter{0%,88%,100%{transform:none}89%{transform:translate(4px,-2px) skewX(8deg)}91%{transform:translate(-6px,1px)}93%{transform:none}}
+.moji{font:600 12px 'Plex',monospace;color:#ff8f7a;text-shadow:1px 0 #0ff,-1px 0 var(--red);text-align:center;word-break:break-all;margin:10px 0 24px}
+/* красная плашка с датой */
+.plate{position:relative;margin:10px -4px 30px;padding:18px 18px 14px;background:var(--red);color:#111;transform:rotate(-1.5deg);box-shadow:0 18px 40px rgba(0,0,0,.8);overflow:hidden}
+.plate p{margin:0;font-family:'Times New Roman',Georgia,serif;font-weight:700;text-transform:uppercase;letter-spacing:.02em;line-height:1}
+.plate__l1{font-size:clamp(28px,9vw,48px);transform:scaleY(1.25);transform-origin:0 0}
+.plate__l1 .st{font-weight:400;font-size:.8em;letter-spacing:.1em}
+.plate__date{position:relative;font-size:clamp(110px,38vw,230px)!important;letter-spacing:-.04em!important;margin:4px 0 0!important;animation:jitter 2.2s steps(1) infinite}
+.plate__date::after{content:attr(data-text);position:absolute;left:0;top:0;color:#fff;mix-blend-mode:overlay;clip-path:inset(40% 0 45% 0);transform:translateX(8px);animation:sl2 1.1s steps(1) infinite}
+.plate__l3{font-size:clamp(28px,9vw,48px);text-align:right;transform:scaleY(1.25);transform-origin:100% 100%}
+.plate::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 1px,transparent 1px 3px);pointer-events:none}
+/* окна Win98 */
+.win{position:relative;max-width:330px;background:#5f5d60;color:#eee;font:12px Tahoma,Verdana,sans-serif;border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:0 14px 30px rgba(0,0,0,.8);margin:0 0 30px}
+.bar{display:flex;justify-content:space-between;padding:2px 6px;background:linear-gradient(90deg,#800000,#e07a7a);color:#fff;font-weight:700}
+.body{display:flex;gap:12px;padding:12px}
+.body p{margin:0}.body b{color:#ffd400}
+.ico{flex:none;width:30px;height:30px;border-radius:50%;background:#c00;color:#fff;display:grid;place-items:center;font-weight:700}
+.ico.warn{background:#e8c400;color:#000;border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%);padding-top:8px}
+.btns{text-align:center;margin:0 0 10px}
+.wb{font:12px Tahoma,sans-serif;color:#eee;background:#5f5d60;padding:4px 14px;border:2px solid;border-color:#fff #404040 #404040 #fff;cursor:pointer}
+.wb:active{border-color:#404040 #fff #fff #404040}
+.w1{margin-left:auto;transform:rotate(2deg)}
+.w2{transform:rotate(-2deg)}
+.shake{animation:shake .4s}
+@keyframes shake{20%{transform:translate(-8px,2px)}40%{transform:translate(8px,-2px)}60%{transform:translate(-5px,1px)}80%{transform:translate(5px)}}
+/* Index of */
+.idx{background:rgba(0,0,0,.82);padding:12px;margin:0 0 30px;font:13px 'Times New Roman',serif}
+.idx h2{font:700 18px 'Times New Roman',serif;margin:0 0 8px;color:#ddd}
+.idx table{width:100%;border-collapse:collapse;border-top:1px solid #555;border-bottom:1px solid #555}
+.idx td{padding:2px 4px}
+.idx s{color:#888;text-decoration-color:var(--red);text-decoration-thickness:2px}
+.del{color:var(--red);font:600 11px 'Plex',monospace;text-align:right}
+.foot{font-style:italic;color:#777;margin:6px 0 0}
+/* плеер */
+.amp{max-width:420px;margin:0 auto 30px;background:linear-gradient(#4a4e58,#2b2e35);border:2px solid;border-color:#7a7f8c #15161a #15161a #7a7f8c;font:11px Tahoma,sans-serif;color:#cfd3dc;box-shadow:0 16px 36px rgba(0,0,0,.85)}
+.amp__bar{display:flex;justify-content:space-between;padding:2px 6px;background:repeating-linear-gradient(0deg,#c0392b 0 1px,#5a1410 1px 3px);color:#fff;font:700 10px Arial;letter-spacing:.2em}
+.amp__bar i{font-style:normal}
+.amp__lcd{margin:6px;background:#000;border:2px inset #555;padding:6px}
+.amp__time{margin:0;font:600 26px 'Plex',monospace;color:#3f3;text-shadow:0 0 6px rgba(70,255,70,.6)}
+.amp__title{margin:4px 0;overflow:hidden;white-space:nowrap;font:600 11px 'Plex',monospace;color:#3f3}
+.amp__title span{display:inline-block;padding-left:100%;animation:scroll 9s linear infinite}
+@keyframes scroll{to{transform:translateX(-100%)}}
+#vis{width:100%;height:36px;image-rendering:pixelated}
+#seek{width:calc(100% - 12px);margin:4px 6px}
+.amp__ctrl{display:flex;gap:4px;padding:0 6px 6px}
+.amp__ctrl .wb{flex:1;padding:6px 0}
+.amp__pl{list-style:none;margin:0;padding:4px 0;background:#000;counter-reset:pl;font:11px 'Plex',monospace}
+.amp__pl li{counter-increment:pl;display:flex;justify-content:space-between;gap:8px;padding:5px 8px;color:#3f3;cursor:pointer}
+.amp__pl li::before{content:counter(pl) ". ";color:#2a2}
+.amp__pl li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.amp__pl li.on{background:#7a0d0d;color:#fff}
+.arch{text-align:center;margin:30px 0 14px}
+.arch a{display:inline-block;padding:10px 16px;background:#111;border:2px outset #4b4b4b;color:#ddd;text-decoration:none;letter-spacing:.2em;font-size:11px}
+.credit{display:block;width:fit-content;margin:0 auto;padding:8px 14px;background:#a3151a;color:#fff;font:11px Arial;letter-spacing:.25em;text-transform:uppercase}
+.credit a{color:#fff;font:700 14px 'Plex',monospace;letter-spacing:.06em;text-transform:none;text-decoration:none}
+/* вспышка «краша» */
+.crash{position:fixed;inset:0;z-index:5;pointer-events:none;opacity:0;background:url(tv68.webp) center/cover;mix-blend-mode:screen}
+.crash.on{opacity:.9}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.tv i:nth-child(1){opacity:1}}
