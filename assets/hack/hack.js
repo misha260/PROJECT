@@ -9,7 +9,7 @@
   const cdD = $('#cdD'), cdH = $('#cdH'), cdM = $('#cdM'), cdS = $('#cdS');
   const tickCd = () => {
     let s = Math.max(0, Math.floor((target - Date.now()) / 1000));
-    if (!s) { $('.cd__l').textContent = 'восстановление началось'; }
+    if (!s) { var l = $('.cd__l'); if (l) l.textContent = 'восстановление началось'; }
     cdD.textContent = pad(Math.floor(s / 86400)); s %= 86400;
     cdH.textContent = pad(Math.floor(s / 3600)); cdM.textContent = pad(Math.floor(s % 3600 / 60)); cdS.textContent = pad(s % 60);
   };
