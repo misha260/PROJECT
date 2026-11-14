@@ -142,17 +142,9 @@ body{font:13px/1.5 Verdana,Tahoma,sans-serif}
 .b-moji{text-shadow:none}
 .cd{border:0}
 /* чат */
-.chat{margin:0 0 30px;padding:12px;background:rgba(0,0,0,.75);border:1px solid #2a2a2a}
-.chat__h{margin:0 0 10px;font:600 11px 'Plex',monospace;color:#7cff8a}
-.chat__m{display:block;max-width:86%;height:auto;border-radius:18px;margin:0 0 10px auto;box-shadow:0 8px 18px rgba(0,0,0,.6)}
-.chat__m--2{margin-left:0}
-.chat__typing{margin:0;font:12px Arial;color:#aaa;font-style:italic}
-.chat__typing span{animation:blink 1s steps(2) infinite}
-/* сообщение взломщиков */
-.claim{margin:0 -4px 30px;padding:16px;background:#000;border:2px solid var(--red);box-shadow:0 0 24px rgba(255,58,31,.35);transform:rotate(-1deg)}
-.claim p{margin:0}
-.claim__from{font:600 10px 'Plex',monospace;color:#777;margin-bottom:10px!important}
-.claim__t{font:800 clamp(20px,6.4vw,30px)/1.15 'Unbounded',sans-serif;color:#fff;letter-spacing:-.02em}
-.claim__t2{font:400 clamp(16px,5vw,22px)/1.3 'Times New Roman',serif;color:var(--red);margin-top:10px!important}
-.claim__t2 b{color:#fff}
-.claim__sig{font:600 12px 'Plex',monospace;color:#888;text-align:right;margin-top:12px!important}
+.msgs{margin:0 0 30px}
+.msgs img{display:block;width:100%;max-width:420px;height:auto;margin:0 0 8px;border-radius:7% / 30%}
+.msgs img+img{border-radius:6% / 16%}
+.claim{margin:0 0 30px;font:16px/1.4 Arial,sans-serif;color:#fff}
+.bg403{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.bg403 text{font:900 50px 'Unbounded',Arial Black,sans-serif;fill:#d0201a;opacity:.55}
