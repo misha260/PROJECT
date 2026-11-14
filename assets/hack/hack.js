@@ -5,7 +5,7 @@
   const clock = $('#clock');
   setInterval(() => { const d = new Date(); clock.textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; }, 1000);
   // кракозябры сыпятся
-  const junk = '�▒░▓ЃЌЉЊЋЏђѓќљњћџ¦§©¬®°±µ¶·';
+  const junk = '\uFFFD▒░▓ЃЌЉЊЋЏђѓќљњћџ¦§©¬®°±µ¶·';
   document.querySelectorAll('[data-moji]').forEach(el => {
     const base = el.textContent;
     if (!reduce) setInterval(() => {
